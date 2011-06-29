@@ -7,6 +7,10 @@ class ganeti_tutorial::gwm {
             ensure      => "installed",
             require     => [ Package["python-pip"], Package["puppet"] ],
             provider    => "pip";
+        "virtualenv":
+            ensure      => "installed",
+            require     => [ Package["python-pip"], Package["puppet"] ],
+            provider    => "pip";
     }
 
     file { "/var/lib/django": ensure => directory }
@@ -19,6 +23,7 @@ class ganeti_tutorial::gwm {
         "deploy-gwm":
             command => "/usr/local/bin/fab prod deploy",
             cwd     => "/var/lib/django/ganeti_webmgr",
-            require => [ Package["fabric"], Exec["unpack_gwm"] ];
+            require => [ Package["fabric"], Package["virtualenv"], 
+                        Exec["unpack_gwm"] ];
     }
 }
