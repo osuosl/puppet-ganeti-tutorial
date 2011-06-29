@@ -2,7 +2,7 @@ class ganeti_tutorial::gwm {
     include ganeti_tutorial::puppet
     require ganeti_tutorial::params
 
-    $gwm_version = ${ganeti_tutorial::params::gwm_version}
+    $gwm_version = "${ganeti_tutorial::params::gwm_version}"
 
     package {
         "python-pip":   ensure => "installed";

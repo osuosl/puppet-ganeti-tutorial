@@ -2,8 +2,8 @@ class ganeti_tutorial::instance_image {
     require ganeti_tutorial::params
 
     $image_files    = "/etc/puppet/modules/ganeti_tutorial/files/instance-image"
-    $image_version  = ${ganeti_tutorial::params::image_version}
-    $debian_version = ${ganeti_tutorial::params::debian_version}
+    $image_version  = "${ganeti_tutorial::params::image_version}"
+    $debian_version = "${ganeti_tutorial::params::debian_version}"
 
     file {
         "/etc/default/ganeti-instance-image":

@@ -1,7 +1,7 @@
 class ganeti_tutorial::ganeti::install {
     require ganeti_tutorial::params
 
-    $ganeti_version = ${ganeti_tutorial::params::ganeti_version}
+    $ganeti_version = "${ganeti_tutorial::params::ganeti_version}"
 
     ganeti_tutorial::unpack {
         "ganeti":
