@@ -4,7 +4,7 @@ class ganeti_tutorial::install_deps {
         "lvm2":             ensure=> installed;
         "bridge-utils":     ensure=> installed;
         "iproute":          ensure=> installed;
-        "iputils-apring":   ensure=> installed;
+        "iputils-arping":   ensure=> installed;
         "ndisc6":           ensure=> installed;
         "python-pyopenssl": ensure=> installed;
         "openssl":          ensure=> installed;
