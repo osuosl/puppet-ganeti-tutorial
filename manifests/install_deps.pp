@@ -26,7 +26,7 @@ class ganeti_tutorial::install_deps {
     file {
         "/root/src":
             ensure  => present,
-            source  => "puppet://modules/ganeti-tutorial/src/",
+            source  => "/etc/puppet/modules/ganeti_tutorial/files/src/",
             recurse => true;
     }
 }
