@@ -22,4 +22,11 @@ class ganeti_tutorial::install_deps {
         # Misc
         "vim":              ensure=> installed;
     }
+
+    file {
+        "/root/src":
+            ensure  => present,
+            source  => "puppet://modules/ganeti-tutorial/src/",
+            recurse => true;
+    }
 }
