@@ -3,7 +3,7 @@ class ganeti_tutorial::gwm {
         "python-pip":   ensure => "installed";
         "fabric":
             ensure      => "installed",
-            require     => Package["python-pip"],
+            require     => [ Package["python-pip"], Package["puppet"] ],
             provider    => "pip";
     }
 
