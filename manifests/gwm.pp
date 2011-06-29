@@ -11,11 +11,11 @@ class ganeti_tutorial::gwm {
 
     exec { 
         "unpack_gwm":
-            command => "tar -zxf /root/src/ganeti-webmgr.0.7.2.tar.gz",
+            command => "/bin/tar -zxf /root/src/ganeti-webmgr.0.7.2.tar.gz",
             cwd     => "/var/lib/django",
             require => [ File["/root/src"], File["/var/lib/django"] ];
         "deploy-gwm":
-            command => "fab prod deploy",
+            command => "/usr/local/bin/fab prod deploy",
             cwd     => "/var/lib/django/ganeti_webmgr",
             require => [ Package["fabric"], Exec["unpack_gwm"] ];
     }
