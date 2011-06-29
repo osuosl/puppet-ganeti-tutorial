@@ -1,4 +1,6 @@
 class ganeti_tutorial::gwm {
+    include ganeti_tutorial::puppet
+
     package {
         "python-pip":   ensure => "installed";
         "fabric":
