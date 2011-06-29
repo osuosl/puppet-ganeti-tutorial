@@ -26,6 +26,6 @@ class ganeti_tutorial::gwm {
             command => "/usr/local/bin/fab prod deploy",
             cwd     => "/var/lib/django/ganeti_webmgr",
             require => [ Package["fabric"], Package["virtualenv"], 
-                        Exec["unpack_gwm"] ];
+                        Package["python-dev"], Exec["unpack_gwm"] ];
     }
 }
