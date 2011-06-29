@@ -19,5 +19,7 @@ class ganeti_tutorial::install_deps {
         "dump":             ensure=> installed;
         "kpartx":           ensure=> installed;
         "kvm":              ensure=> installed;
+        # Misc
+        "vim":              ensure=> installed;
     }
 }
