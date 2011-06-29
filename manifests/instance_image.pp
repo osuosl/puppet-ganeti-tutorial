@@ -14,4 +14,13 @@ class ganeti_tutorial::instance_image {
         "/etc/ganeti/instance-image/hooks/interfaces":
             mode    => 755;
     }
+
+    ganeti_tutorial::wget {
+        "debian-boot":
+            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-6.0.1-x86_64-boot.dump",
+            destination => "/var/cache/ganeti-instance-image/debian-6.0.1-x86_64-boot.dump";
+        "debian-root":
+            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-6.0.1-x86_64-root.dump",
+            destination => "/var/cache/ganeti-instance-image/debian-6.0.1-x86_64-root.dump";
+    }
 }
