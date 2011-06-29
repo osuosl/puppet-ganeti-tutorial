@@ -4,7 +4,7 @@ class ganeti_tutorial::gwm {
         "fabric":
             ensure      => "installed",
             require     => Package["python-pip"],
-            provider    => "installed";
+            provider    => "pip";
     }
 
     file { "/var/lib/django": ensure => directory }
