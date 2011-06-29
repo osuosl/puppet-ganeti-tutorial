@@ -6,12 +6,13 @@ _instructional tool_. It will setup two ganeti nodes with the basics to install
 Image](http://code.osuosl.org/projects/ganeti-image), and [Ganeti Web
 Manager](http://code.osuosl.org/projects/ganeti-webmgr).
 
-This module will be used for [OSCON
-2011](http://www.oscon.com/oscon2011/public/schedule/detail/18544).
+This module will be used for [Hands on Virtualization with
+Ganeti](http://www.oscon.com/oscon2011/public/schedule/detail/18544) at [OSCON
+2011](http://oscon.com).
 
 # Requirements
 
-This assumes that you have a Debian Squeeze VM setup inside of VirtualBox.
+This assumes that you have two Debian Squeeze VMs setup inside of VirtualBox.
 
 # Copyright
 
