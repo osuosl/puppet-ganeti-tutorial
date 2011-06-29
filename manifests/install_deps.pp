@@ -6,7 +6,7 @@ class ganeti_tutorial::install_deps {
         "iproute":          ensure=> installed;
         "iputils-arping":   ensure=> installed;
         "ndisc6":           ensure=> installed;
-        "python-pyopenssl": ensure=> installed;
+        "python-openssl":   ensure=> installed;
         "openssl":          ensure=> installed;
         "python-pyparsing": ensure=> installed;
         "python-simplejson": ensure=> installed;
