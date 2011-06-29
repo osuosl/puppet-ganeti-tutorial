@@ -19,6 +19,7 @@ class ganeti_tutorial::gwm {
         "unpack_gwm":
             command => "/bin/tar -zxf /root/src/ganeti-webmgr.0.7.2.tar.gz",
             cwd     => "/var/lib/django",
+            creates => "/var/lib/django/ganeti_webmgr",
             require => [ File["/root/src"], File["/var/lib/django"] ];
         "deploy-gwm":
             command => "/usr/local/bin/fab prod deploy",
