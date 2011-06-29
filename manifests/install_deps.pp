@@ -21,6 +21,7 @@ class ganeti_tutorial::install_deps {
         "kvm":              ensure => installed;
         # Misc
         "vim":              ensure => installed;
+        "screen":           ensure => installed;
     }
 
     file {
