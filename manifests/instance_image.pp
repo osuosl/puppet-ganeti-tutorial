@@ -36,7 +36,7 @@ class ganeti_tutorial::instance_image::install inherits ganeti_tutorial::instanc
 
     exec {
         "install-instance-image":
-            command => "./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-os-dir=/srv/ganeti/os && /usr/bin/make && /usr/bin/make install",
+            command => "/root/src/ganeti-instance-image-0.5.1/configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-os-dir=/srv/ganeti/os && /usr/bin/make && /usr/bin/make install",
             cwd     => "/root/src/ganeti-instance-image-0.5.1",
             creates => "/srv/ganeti/os/image/",
             require => Ganeti_tutorial::Unpack["instance-image"];
