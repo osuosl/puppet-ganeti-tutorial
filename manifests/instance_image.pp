@@ -17,6 +17,10 @@ class ganeti_tutorial::instance_image {
             source  => "${image_files}/debian-lenny.conf";
         "/etc/ganeti/instance-image/hooks/interfaces":
             mode    => 755;
+        "/etc/ganeti/instance-image/hooks/zz-no-net":
+            ensure  => present,
+            mode    => 755,
+            source  => "${image_files}/hooks/zz-no-net";
     }
 
     ganeti_tutorial::wget {

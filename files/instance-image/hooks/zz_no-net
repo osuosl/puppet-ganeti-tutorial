@@ -1,0 +1,23 @@
+#!/bin/bash
+# Sets no networking for the VM
+
+set -e
+
+. common.sh
+
+debug set -x
+
+if [ -z "${TARGET}" -o ! -d "${TARGET}" ] ; then
+    log_error "Missing target directory"
+    exit 1
+fi
+
+cat > ${TARGET}/etc/network/interfaces << EOF
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+auto lo
+iface lo inet loopback
+EOF
+
+exit 0
