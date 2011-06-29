@@ -14,6 +14,30 @@ Ganeti](http://www.oscon.com/oscon2011/public/schedule/detail/18544) at [OSCON
 
 This assumes that you have two Debian Squeeze VMs setup inside of VirtualBox.
 
+# Steps
+
+## Install Ganeti
+
+    ./configure --localstatedir=/var --sysconfdir=/etc
+    make && make install
+
+## Install Instance Image
+
+    ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc \
+        --with-os-dir=/srv/ganeti/os
+    make && make install
+
+## Initialize Ganeti
+
+    gnt-cluster init \
+        --vg-name=ganeti \
+        -s 192.168.16.15 \
+        --master-netdev=br0 \
+        -H kvm:nic_type=e1000,disk_type=scsi,vnc_bind_address=0.0.0.0 \
+        ganeti.example.org
+
+## Profit!
+
 # Copyright
 
 This work is licensed under a [Creative Commons Attribution-Share Alike 3.0
