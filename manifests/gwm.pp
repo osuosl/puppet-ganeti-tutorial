@@ -1,5 +1,8 @@
 class ganeti_tutorial::gwm {
     include ganeti_tutorial::puppet
+    require ganeti_tutorial::params
+
+    $gwm_version = ${ganeti_tutorial::params::gwm_version}
 
     package {
         "python-pip":   ensure => "installed";
@@ -18,7 +21,7 @@ class ganeti_tutorial::gwm {
 
     ganeti_tutorial::unpack {
         "gwm":
-            source  => "/root/src/ganeti-webmgr.0.7.2.tar.gz",
+            source  => "/root/src/ganeti-webmgr.${gwm_version}.tar.gz",
             cwd     => "/var/lib/django",
             creates => "/var/lib/django/ganeti_webmgr",
             require => [ File["/root/src"], File["/var/lib/django"] ];
