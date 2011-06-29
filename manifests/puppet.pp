@@ -8,6 +8,7 @@ class ganeti_tutorial::puppet {
         "puppet":
             ensure      => latest,
             provider    => dpkg,
+            require     => Package["puppet-common"],
             source      => "${deb_dir}/puppet_2.7.0~rc4-1_all.deb";
     }
 }
