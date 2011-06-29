@@ -22,6 +22,7 @@ class ganeti_tutorial::install_deps {
         # Misc
         "vim":              ensure => installed;
         "screen":           ensure => installed;
+        "git":              ensure => installed;
     }
 
     file {
