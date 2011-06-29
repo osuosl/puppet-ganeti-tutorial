@@ -1,0 +1,58 @@
+# ganeti-instance-image defaults file
+
+# CDINSTALL: Only setup disks for a cd based install
+# Just setup the disks so that you can boot a machine up on a cd to create a
+# new image
+# CDINSTALL="no"
+
+# SWAP: Create a swap partition
+# SWAP=yes
+
+# SWAP_SIZE: Manually set the size of the swap partition (in MB)
+# If left empty, it will set the size equal to the memory for the instance.
+# Make sure you have enough disk space for the swap partition!
+# SWAP_SIZE=""
+
+# FILESYSTEM: Set which filesystem to format the disks as. Currently only
+# supports ext3 or ext4. Default is ext3.
+# FILESYSTEM="ext3"
+
+# KERNEL_ARGS: Add additional kernel boot arguments to an instance. This only
+# works on instances booting a kernel from inside.
+# KERNEL_ARGS=""
+
+# IMAGE_NAME: Name of the image to use
+# Generally you use the name of the image with the version of the OS included.
+# Examples include:
+#   centos-5.4 debian-4.0 fedora-12
+# IMAGE_NAME=""
+
+# IMAGE_TYPE: Either qemu disk images, tarball, or dump based images.
+# Use either qemu, tarball, dump (default is dump)
+# IMAGE_TYPE="dump"
+
+# IMAGE_DIR: directory location for disk images
+# ( default is @localstatedir@/cache/ganeti-instance-image )
+# IMAGE_DIR=""
+
+# NOMOUNT: Do not try to mount volume (if it is not a linux partition). Accepts
+# either 'yes' or 'no'. This option is useful for installing Windows images for
+# example. ( default is no )
+# NOMOUNT=""
+
+# OVERLAY: overlay of files to be copied to the instance after OS installation.
+# This is useful for situations where you want to copy instance specific
+# configs such as resolv.conf.
+# OVERLAY=""
+
+# ARCH: Define the ARCH of the image to use
+# Use either x86 or x86_64
+ARCH="x86_64"
+
+# CUSTOMIZE_DIR: a directory containing scripts to customize the installation.
+# The scripts are executed using run-parts
+# By default /etc/ganeti/instance-image/hooks
+# CUSTOMIZE_DIR="/etc/ganeti/instance-image/hooks"
+
+# IMAGE_DEBUG: turn on debugging output for the scripts
+# IMAGE_DEBUG=0
