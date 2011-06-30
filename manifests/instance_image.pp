@@ -8,32 +8,37 @@ class ganeti_tutorial::instance_image {
     file {
         "/etc/default/ganeti-instance-image":
             ensure  => present,
+            require => Exec["install-instance-image"],
             source  => "${image_files}/defaults";
         "/etc/ganeti/instance-image/variants.list":
             ensure  => present,
+            require => Exec["install-instance-image"],
             source  => "${image_files}/variants.list";
         "/etc/ganeti/instance-image/variants/debian-lenny.conf":
             ensure  => present,
+            require => Exec["install-instance-image"],
             source  => "${image_files}/debian-lenny.conf";
         "/etc/ganeti/instance-image/hooks/interfaces":
             mode    => 755;
+            require => Exec["install-instance-image"],
         "/etc/ganeti/instance-image/hooks/zz-no-net":
             ensure  => present,
             mode    => 755,
+            require => Exec["install-instance-image"],
             source  => "${image_files}/hooks/zz-no-net";
     }
 
     ganeti_tutorial::wget {
         "debian-boot":
+            require     => Exec["install-instance-image"],
             source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-${debian_version}-x86_64-boot.dump",
             destination => "/var/cache/ganeti-instance-image/debian-${debian_version}-x86_64-boot.dump";
         "debian-root":
+            require     => Exec["install-instance-image"],
             source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-${debian_version}-x86_64-root.dump",
             destination => "/var/cache/ganeti-instance-image/debian-${debian_version}-x86_64-root.dump";
     }
-}
 
-class ganeti_tutorial::instance_image::install inherits ganeti_tutorial::instance_image{
     ganeti_tutorial::unpack {
         "instance-image":
             source      => "/root/src/ganeti-instance-image-${image_version}.tar.gz",
