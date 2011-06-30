@@ -21,11 +21,11 @@ class ganeti_tutorial::instance_image {
         "/etc/ganeti/instance-image/hooks/interfaces":
             mode    => 755,
             require => Exec["install-instance-image"];
-        "/etc/ganeti/instance-image/hooks/zz-no-net":
+        "/etc/ganeti/instance-image/hooks/zz_no-net":
             ensure  => present,
             mode    => 755,
             require => Exec["install-instance-image"],
-            source  => "${image_files}/hooks/zz-no-net";
+            source  => "${image_files}/hooks/zz_no-net";
     }
 
     ganeti_tutorial::wget {
