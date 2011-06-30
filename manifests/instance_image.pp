@@ -19,8 +19,8 @@ class ganeti_tutorial::instance_image {
             require => Exec["install-instance-image"],
             source  => "${image_files}/debian-lenny.conf";
         "/etc/ganeti/instance-image/hooks/interfaces":
-            mode    => 755;
-            require => Exec["install-instance-image"],
+            mode    => 755,
+            require => Exec["install-instance-image"];
         "/etc/ganeti/instance-image/hooks/zz-no-net":
             ensure  => present,
             mode    => 755,
