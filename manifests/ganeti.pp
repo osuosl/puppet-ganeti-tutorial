@@ -6,7 +6,7 @@ class ganeti_tutorial::ganeti::install {
     file {
         "/etc/init.d/ganeti":
             ensure  => present,
-            require => Ganeti_tutorial::Unpack["ganeti"],
+            require => Exec["install-ganeti"],
             source  => "/root/src/ganeti-${ganeti_version}/doc/examples/ganeti.initd",
             mode    => 755,
     }
