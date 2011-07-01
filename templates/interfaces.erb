@@ -10,10 +10,8 @@ auto br0
 iface br0 inet static
    address <%=host_ip%> 
    netmask 255.255.255.0
-   network 10.0.2.0
-   broadcast 10.0.2.255
-   gateway 10.0.2.2
-   dns-nameservers 192.168.1.1
+   network 10.1.0.0
+   broadcast 10.1.0.255
    dns-search example.org
    dns-domain example.org
    bridge_ports eth0
@@ -27,3 +25,6 @@ iface eth1 inet static
     netmask 255.255.255.0
     network 192.168.16.0
     broadcast 192.168.16.255
+
+allow-hotplug eth2
+iface eth2 inet dhcp
