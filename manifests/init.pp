@@ -16,6 +16,6 @@ class ganeti_tutorial {
             target  => "/boot/vmlinuz-2.6.32-5-amd64";
         "/boot/initrd-2.6-kvmU":
             ensure  => link,
-            target  => "/boot/initrd-2.6.32-5-amd64";
+            target  => "/boot/initrd.img-2.6.32-5-amd64";
     }
 }
