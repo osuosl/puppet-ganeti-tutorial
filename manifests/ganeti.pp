@@ -3,6 +3,14 @@ class ganeti_tutorial::ganeti::install {
 
     $ganeti_version = "${ganeti_tutorial::params::ganeti_version}"
 
+    file {
+        "/etc/init.d/ganeti":
+            ensure  => present,
+            require => Ganeti_tutorial::Unpack["ganeti"],
+            source  => "/root/src/ganeti-${ganeti_version}/doc/examples/ganeti.initd",
+            mode    => 755,
+    }
+
     ganeti_tutorial::unpack {
         "ganeti":
             source      => "/root/src/ganeti-${ganeti_version}.tar.gz",
@@ -17,5 +25,11 @@ class ganeti_tutorial::ganeti::install {
             cwd     => "/root/src/ganeti-${ganeti_version}",
             creates => "/usr/local/sbin/gnt-cluster",
             require => Ganeti_tutorial::Unpack["ganeti"];
+    }
+
+    service {
+        "ganeti":
+            enable      => true,
+            require     => File["/etc/init.d/ganeti"],
     }
 }
