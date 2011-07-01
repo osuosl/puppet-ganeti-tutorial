@@ -12,7 +12,7 @@ class ganeti_tutorial::ganeti::install {
     }
 
     exec {
-        "install-instance-image":
+        "install-ganeti":
             command => "/root/src/ganeti-${ganeti_version}/configure --localstatedir=/var --sysconfdir=/etc && /usr/bin/make && /usr/bin/make install",
             cwd     => "/root/src/ganeti-${ganeti_version}",
             creates => "/usr/local/sbin/gnt-cluster",
