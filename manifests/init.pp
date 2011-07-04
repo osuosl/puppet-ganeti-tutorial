@@ -17,5 +17,8 @@ class ganeti_tutorial {
         "/boot/initrd-2.6-kvmU":
             ensure  => link,
             target  => "/boot/initrd.img-2.6.32-5-amd64";
+        "/root/puppet":
+            ensure  => link,
+            target  => "/etc/puppet/modules/manifests/ganeti_tutorial";
     }
 }
