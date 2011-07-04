@@ -9,4 +9,9 @@ class ganeti_tutorial::drbd {
             ensure  => present,
             source  => "/etc/puppet/modules/ganeti_tutorial/files/modules",
     }
+
+    service {
+        "drbd":
+           enable   => false,
+    }
 }
