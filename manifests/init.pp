@@ -20,5 +20,8 @@ class ganeti_tutorial {
         "/root/puppet":
             ensure  => link,
             target  => "/etc/puppet/modules/ganeti_tutorial";
+        "/var/lib/ganeti/rapi/users":
+            ensure  => "present",
+            source  => "$files/rapi-users";
     }
 }

@@ -3,4 +3,5 @@ class ganeti_tutorial::params {
     $image_version  = "0.5.1"
     $gwm_version    = "0.7.2"
     $debian_version = "6.0.1"
+    $files          = "/etc/puppet/modules/ganeti_tutorial/files"
 }
