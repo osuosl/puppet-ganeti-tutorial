@@ -11,4 +11,9 @@ class ganeti_tutorial::puppet {
             require     => Package["puppet-common"],
             source      => "${deb_dir}/puppet_2.7.0~rc4-1_all.deb";
     }
+    
+    service {
+        "puppet":
+            ensure      => false,
+    }
 }
