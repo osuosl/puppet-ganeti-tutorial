@@ -1,7 +1,6 @@
 class ganeti_tutorial::instance_image {
     require ganeti_tutorial::params
 
-    $image_files    = "/etc/puppet/modules/ganeti_tutorial/files/instance-image"
     $image_version  = "${ganeti_tutorial::params::image_version}"
     $debian_version = "${ganeti_tutorial::params::debian_version}"
 
@@ -9,15 +8,15 @@ class ganeti_tutorial::instance_image {
         "/etc/default/ganeti-instance-image":
             ensure  => present,
             require => Exec["install-instance-image"],
-            source  => "${image_files}/defaults";
+            source  => "${ganeti_tutorial::params::files}/instance-image/defaults";
         "/etc/ganeti/instance-image/variants.list":
             ensure  => present,
             require => Exec["install-instance-image"],
-            source  => "${image_files}/variants.list";
+            source  => "${ganeti_tutorial::params::files}/instance-image/variants.list";
         "/etc/ganeti/instance-image/variants/debian-lenny.conf":
             ensure  => present,
             require => Exec["install-instance-image"],
-            source  => "${image_files}/debian-lenny.conf";
+            source  => "${ganeti_tutorial::params::files}/instance-image/debian-lenny.conf";
         "/etc/ganeti/instance-image/hooks/interfaces":
             mode    => 755,
             require => Exec["install-instance-image"];
@@ -25,7 +24,7 @@ class ganeti_tutorial::instance_image {
             ensure  => present,
             mode    => 755,
             require => Exec["install-instance-image"],
-            source  => "${image_files}/hooks/zz_no-net";
+            source  => "${ganeti_tutorial::params::files}/instance-image/hooks/zz_no-net";
     }
 
     ganeti_tutorial::wget {
