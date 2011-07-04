@@ -13,5 +13,6 @@ class ganeti_tutorial::drbd {
     service {
         "drbd":
            enable   => false,
+           require  => Package["drbd8-utils"],
     }
 }
