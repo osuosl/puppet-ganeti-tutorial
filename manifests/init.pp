@@ -11,11 +11,14 @@ class ganeti_tutorial {
     file {
         "/root/.ssh":
             ensure  => directory;
+        "/var/lib/ganeti/rapi/":
+            ensure  => directory;
         "/root/puppet":
             ensure  => link,
             target  => "/etc/puppet/modules/ganeti_tutorial";
         "/var/lib/ganeti/rapi/users":
             ensure  => "present",
+            require => File["/var/lib/ganeti/rapi/"],
             source  => "${ganeti_tutorial::params::files}/rapi-users";
     }
 }
