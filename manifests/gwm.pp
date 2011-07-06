@@ -17,22 +17,20 @@ class ganeti_tutorial::gwm {
             provider    => "pip";
     }
 
-    file { "/var/lib/django": ensure => directory }
-
     ganeti_tutorial::unpack {
         "gwm":
             source  => "/root/src/ganeti-webmgr.${gwm_version}.tar.gz",
-            cwd     => "/var/lib/django",
-            creates => "/var/lib/django/ganeti_webmgr",
-            require => [ File["/root/src"], File["/var/lib/django"] ];
+            cwd     => "/root/",
+            creates => "/root/ganeti_webmgr",
+            require => File["/root/src"];
     }
 
     exec { 
         "deploy-gwm":
             command => "/usr/local/bin/fab prod deploy",
-            cwd     => "/var/lib/django/ganeti_webmgr",
-            timeout => "300",
-            creates => "/var/lib/django/ganeti_webmgr/bin/activate",
+            cwd     => "/root/ganeti_webmgr",
+            timeout => "400",
+            creates => "/root/ganeti_webmgr/bin/activate",
             require => [ Package["fabric"], Package["virtualenv"], 
                         Package["python-dev"], Exec["unpack-gwm"] ];
     }
