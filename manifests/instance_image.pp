@@ -4,6 +4,12 @@ class ganeti_tutorial::instance_image {
     $image_version  = "${ganeti_tutorial::params::image_version}"
     $debian_version = "${ganeti_tutorial::params::debian_version}"
 
+    package {
+        "qemu-utils":       ensure => installed;
+        "dump":             ensure => installed;
+        "kpartx":           ensure => installed;
+    }
+
     file {
         "/etc/default/ganeti-instance-image":
             ensure  => present,
@@ -51,6 +57,7 @@ class ganeti_tutorial::instance_image {
             command => "/root/src/ganeti-instance-image-${image_version}/configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-os-dir=/srv/ganeti/os && /usr/bin/make && /usr/bin/make install",
             cwd     => "/root/src/ganeti-instance-image-${image_version}",
             creates => "/srv/ganeti/os/image/",
-            require => Ganeti_tutorial::Unpack["instance-image"];
+            require => [ Ganeti_tutorial::Unpack["instance-image"], 
+                Package["dump"], Package["kpartx"], Package["qemu-utils"], ];
     }
 }

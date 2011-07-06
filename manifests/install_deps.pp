@@ -14,10 +14,6 @@ class ganeti_tutorial::install_deps {
         "python-pycurl":    ensure => installed;
         "socat":            ensure => installed;
         "python-paramiko":  ensure => installed;
-        # Instance Image
-        "qemu-utils":       ensure => installed;
-        "dump":             ensure => installed;
-        "kpartx":           ensure => installed;
         # Misc
         "vim":              ensure => installed;
         "screen":           ensure => installed;
