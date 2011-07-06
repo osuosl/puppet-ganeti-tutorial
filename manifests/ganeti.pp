@@ -21,7 +21,7 @@ class ganeti_tutorial::ganeti::install {
 
     exec {
         "install-ganeti":
-            command => "/root/src/ganeti-${ganeti_version}/configure --localstatedir=/var --sysconfdir=/etc && /usr/bin/make && /usr/bin/make install",
+            command => "/root/puppet/files/scripts/install-ganeti",
             cwd     => "/root/src/ganeti-${ganeti_version}",
             creates => "/usr/local/sbin/gnt-cluster",
             require => Ganeti_tutorial::Unpack["ganeti"];
