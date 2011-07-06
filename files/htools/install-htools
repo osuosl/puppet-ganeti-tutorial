@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+make
+mkdir -p /usr/local/man/man1 /usr/local/lib/ganeti/iallocators
+cp {hbal,hscan,hspace} /usr/local/sbin/
+cp hail /usr/local/lib/ganeti/iallocators/
+cp man/*.1 /usr/local/man/man1
