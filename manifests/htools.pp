@@ -21,7 +21,7 @@ class ganeti_tutorial::htools {
 
     exec {
         "install-htools":
-            command => "/root/puppet/files/htools/install-htools",
+            command => "/root/puppet/files/scripts/install-htools",
             cwd     => "/root/src/ganeti-htools-${htools_version}",
             creates => "/usr/local/sbin/hbal",
             require => [ Package["ghc6"], Package["libghc6-json-dev"],

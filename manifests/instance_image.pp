@@ -54,7 +54,7 @@ class ganeti_tutorial::instance_image {
 
     exec {
         "install-instance-image":
-            command => "/root/puppet/files/intance-image/install-instance-image",
+            command => "/root/puppet/files/scripts/install-instance-image",
             cwd     => "/root/src/ganeti-instance-image-${image_version}",
             creates => "/srv/ganeti/os/image/",
             require => [ Ganeti_tutorial::Unpack["instance-image"], 
