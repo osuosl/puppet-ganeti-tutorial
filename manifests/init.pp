@@ -21,6 +21,7 @@ class ganeti_tutorial {
             target  => "/etc/puppet/modules/ganeti_tutorial";
         "/var/lib/ganeti/rapi/users":
             ensure  => "present",
+            mode    => 640,
             require => File["/var/lib/ganeti/rapi/"],
             source  => "${ganeti_tutorial::params::files}/rapi-users";
     }
