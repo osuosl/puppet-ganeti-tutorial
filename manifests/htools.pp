@@ -18,4 +18,14 @@ class ganeti_tutorial::htools {
             creates => "/root/src/ganeti-htools-${htools_version}",
             require => File["/root/src"];
     }
+
+    exec {
+        "install-htools":
+            command => "/root/puppet/files/htools/install-htools",
+            cwd     => "/root/src/ganeti-htools-${htools_version}",
+            creates => "/usr/local/sbin/hbal",
+            require => [ Package["ghc6"], Package["libghc6-json-dev"],
+                Package["libghc6-network-dev"], Package["libghc6-parallel-dev"],
+                Package["libghc6-curl-dev"], ];
+    }
 }
