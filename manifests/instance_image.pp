@@ -54,10 +54,11 @@ class ganeti_tutorial::instance_image {
 
     exec {
         "install-instance-image":
-            command => "/root/src/ganeti-instance-image-${image_version}/configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-os-dir=/srv/ganeti/os && /usr/bin/make && /usr/bin/make install",
+            command => "/root/puppet/files/intance-image/install-instance-image",
             cwd     => "/root/src/ganeti-instance-image-${image_version}",
             creates => "/srv/ganeti/os/image/",
             require => [ Ganeti_tutorial::Unpack["instance-image"], 
-                Package["dump"], Package["kpartx"], Package["qemu-utils"], ];
+                Package["dump"], Package["kpartx"], Package["qemu-utils"],
+                File["/root/puppet"], ];
     }
 }

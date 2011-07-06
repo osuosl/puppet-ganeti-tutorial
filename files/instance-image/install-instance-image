@@ -1,0 +1,5 @@
+#!/bin/bash
+./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc \
+    --with-os-dir=/srv/ganeti/os
+make
+make install
