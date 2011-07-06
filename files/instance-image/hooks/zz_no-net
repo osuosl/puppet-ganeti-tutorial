@@ -20,4 +20,8 @@ auto lo
 iface lo inet loopback
 EOF
 
+echo "root:oscon" >> ${TARGET}/chpass
+chroot ${TARGET} chpasswd < ${TARGET}/chpass
+rm ${TARGET}/chpass
+
 exit 0
