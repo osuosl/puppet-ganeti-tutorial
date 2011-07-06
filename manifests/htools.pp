@@ -26,6 +26,6 @@ class ganeti_tutorial::htools {
             creates => "/usr/local/sbin/hbal",
             require => [ Package["ghc6"], Package["libghc6-json-dev"],
                 Package["libghc6-network-dev"], Package["libghc6-parallel-dev"],
-                Package["libghc6-curl-dev"], ];
+                Package["libghc6-curl-dev"], Ganeti_tutorial::Unpack["htools"],];
     }
 }
