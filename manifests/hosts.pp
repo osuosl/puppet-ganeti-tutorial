@@ -12,6 +12,10 @@ class ganeti_tutorial::hosts {
             ensure          => present,
             host_aliases    => "node2",
             ip              => "10.1.0.17";
+        "node3.example.org":
+            ensure          => present,
+            host_aliases    => "node3",
+            ip              => "10.1.0.18";
         "instance1.example.org":
             ensure          => present,
             host_aliases    => "instance1",
