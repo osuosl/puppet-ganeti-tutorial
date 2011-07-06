@@ -18,7 +18,6 @@ class ganeti_tutorial::install_deps {
         "qemu-utils":       ensure => installed;
         "dump":             ensure => installed;
         "kpartx":           ensure => installed;
-        "kvm":              ensure => installed;
         # Misc
         "vim":              ensure => installed;
         "screen":           ensure => installed;

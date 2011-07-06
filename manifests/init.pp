@@ -11,12 +11,6 @@ class ganeti_tutorial {
     file {
         "/root/.ssh":
             ensure  => directory;
-        "/boot/vmlinuz-2.6-kvmU":
-            ensure  => link,
-            target  => "/boot/vmlinuz-2.6.32-5-amd64";
-        "/boot/initrd-2.6-kvmU":
-            ensure  => link,
-            target  => "/boot/initrd.img-2.6.32-5-amd64";
         "/root/puppet":
             ensure  => link,
             target  => "/etc/puppet/modules/ganeti_tutorial";
