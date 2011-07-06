@@ -25,6 +25,13 @@ class ganeti_tutorial::gwm {
             require => File["/root/src"];
     }
 
+    file {
+        "/root/ganeti_webmgr/settings.py":
+            ensure  => present,
+            source  => "/root/ganeti_webmgr/settings.py.dist",
+            require => Ganeti_Tutorial::Unpack["gwm"];
+    }
+
     exec { 
         "deploy-gwm":
             command => "/usr/local/bin/fab prod deploy",
