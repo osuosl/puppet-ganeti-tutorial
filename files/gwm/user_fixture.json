@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "auth.user", "fields": {"username": "oscon", "first_name": "", "last_name": "", "is_active": true, "is_superuser": true, "is_staff": true, "last_login": "2011-07-06 14:37:11", "groups": [], "user_permissions": [], "password": "sha1$98f87$29cf80da5d25be417620442958b2d97a281d1340", "email": "root@localhost.com", "date_joined": "2011-07-06 14:37:11"}}]

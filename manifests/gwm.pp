@@ -40,5 +40,10 @@ class ganeti_tutorial::gwm {
             creates => "/root/ganeti_webmgr/bin/activate",
             require => [ Package["fabric"], Package["virtualenv"], 
                         Package["python-dev"], Exec["unpack-gwm"] ];
+        "syncdb-gwm":
+            command => "/root/puppet/files/scripts/syncdb-gwm",
+            cwd     => "/root/ganeti_webmgr",
+            creates => "/root/ganeti_webmgr/ganeti.db",
+            require => Exec["deploy-gwm"];
     }
 }

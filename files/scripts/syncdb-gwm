@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source bin/activate
+./manage.py syncdb --migrate --noinput
+./manage.py loaddata /root/puppet/files/gwm/user_fixture.json 
