@@ -11,6 +11,7 @@ PLUGIN="${0##*/}"
 # Short-Description: Starts a service for the Twisted plugin '$PLUGIN'
 # Description:       Generic plugin starter for twistd plugins
 ### END INIT INFO
+
 # Author: Garret Heaton (powdahound@gmail.com)
 
 DAEMON=/root/ganeti_webmgr/bin/twistd
