@@ -19,6 +19,9 @@ PIDFILE=/var/run/$PLUGIN.pid
 LOGFILE=/var/log/$PLUGIN.log
 DAEMON_OPTS="--pidfile=$PIDFILE --logfile=$LOGFILE $PLUGIN"
 
+# Define LSB log_* functions.
+. /lib/lsb/init-functions
+
 if [ ! -x $DAEMON ]; then
   echo "ERROR: Can't execute $DAEMON."
   exit 1
