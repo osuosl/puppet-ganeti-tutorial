@@ -1,4 +1,6 @@
 class ganeti_tutorial::kvm {
+    $kern_version = "2.6.32-5"
+
     package {
         "kvm":  ensure => installed;
     }
@@ -6,10 +8,16 @@ class ganeti_tutorial::kvm {
     file {
         "/boot/vmlinuz-2.6-kvmU":
             ensure  => link,
-            target  => "/boot/vmlinuz-2.6.32-5-amd64";
+            target  => $architecture ? {
+                x86_64  => "/boot/vmlinuz-${kern_version}-amd64",
+                i386    => "/boot/vmlinuz-${kern_version}-686",
+            };
         "/boot/initrd-2.6-kvmU":
             ensure  => link,
-            target  => "/boot/initrd.img-2.6.32-5-amd64";
+            target  => $achitecture ? {
+                x86_64  => "/boot/initrd.img-${kern_version}-amd64",
+                i386    => "/boot/initrd.img-${kern_version}-686",
+            };
     }
 
     service {
