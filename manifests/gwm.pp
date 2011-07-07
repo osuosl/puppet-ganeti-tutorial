@@ -30,6 +30,14 @@ class ganeti_tutorial::gwm {
             ensure  => present,
             source  => "/root/ganeti_webmgr/settings.py.dist",
             require => Ganeti_Tutorial::Unpack["gwm"];
+        "/etc/init.d/vncap":
+            ensure  => present,
+            source  => "/root/puppet/files/gwm/vncap",
+            mode    => 755;
+        "/etc/init.d/flashpolicy":
+            ensure  => present,
+            source  => "/root/puppet/files/gwm/flashpolicy",
+            mode    => 755;
     }
 
     exec { 
@@ -45,5 +53,14 @@ class ganeti_tutorial::gwm {
             cwd     => "/root/ganeti_webmgr",
             creates => "/root/ganeti_webmgr/ganeti.db",
             require => Exec["deploy-gwm"];
+    }
+
+    service {
+        "vncap":
+            enable  => true,
+            require => File["/etc/init.d/vncap"];
+        "flashpolicy":
+            enable  => true,
+            require => File["/etc/init.d/flashpolicy"];
     }
 }
