@@ -15,5 +15,6 @@ class ganeti_tutorial::kvm {
     service {
         "qemu-kvm":
             enable  => false,
+            require => Package["kvm"],
     }
 }
