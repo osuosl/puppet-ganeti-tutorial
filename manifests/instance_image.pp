@@ -14,7 +14,7 @@ class ganeti_tutorial::instance_image {
         "/etc/default/ganeti-instance-image":
             ensure  => present,
             require => Exec["install-instance-image"],
-            content => template("instance-image/defaults.erb");
+            content => template("ganeti_tutorial/instance-image/defaults.erb");
         "/etc/ganeti/instance-image/variants.list":
             ensure  => present,
             require => Exec["install-instance-image"],
