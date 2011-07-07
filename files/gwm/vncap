@@ -1,9 +1,7 @@
 #!/bin/sh
 
-PLUGIN="vncap"
-
 ### BEGIN INIT INFO
-# Provides:          $PLUGIN
+# Provides:          vncap
 # Required-Start:    $local_fs $remote_fs
 # Required-Stop:     $local_fs $remote_fs
 # Default-Start:     2 3 4 5
@@ -14,6 +12,7 @@ PLUGIN="vncap"
 
 # Author: Garret Heaton (powdahound@gmail.com)
 
+PLUGIN="vncap"
 DAEMON=/root/ganeti_webmgr/bin/twistd
 PIDFILE=/var/run/$PLUGIN.pid
 LOGFILE=/var/log/$PLUGIN.log
