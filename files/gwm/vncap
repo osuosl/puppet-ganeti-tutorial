@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PLUGIN="${0##*/}"
+PLUGIN="vncap"
 
 ### BEGIN INIT INFO
 # Provides:          $PLUGIN
