@@ -14,7 +14,7 @@ class ganeti_tutorial::kvm {
             };
         "/boot/initrd-2.6-kvmU":
             ensure  => link,
-            target  => $achitecture ? {
+            target  => $architecture ? {
                 x86_64  => "/boot/initrd.img-${kern_version}-amd64",
                 i386    => "/boot/initrd.img-${kern_version}-686",
             };
