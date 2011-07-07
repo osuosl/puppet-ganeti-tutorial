@@ -11,4 +11,9 @@ class ganeti_tutorial::kvm {
             ensure  => link,
             target  => "/boot/initrd.img-2.6.32-5-amd64";
     }
+
+    service {
+        "qemu-kvm":
+            enable  => false,
+    }
 }

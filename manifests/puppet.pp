@@ -14,7 +14,7 @@ class ganeti_tutorial::puppet {
     
     service {
         "puppet":
-            ensure      => false,
+            enable      => false,
             require     => Package["puppet"],
     }
 }
