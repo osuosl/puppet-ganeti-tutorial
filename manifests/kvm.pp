@@ -8,15 +8,15 @@ class ganeti_tutorial::kvm {
     file {
         "/boot/vmlinuz-2.6-kvmU":
             ensure  => link,
-            target  => $architecture ? {
+            target  => $hardwaremodel ? {
                 x86_64  => "/boot/vmlinuz-${kern_version}-amd64",
-                i386    => "/boot/vmlinuz-${kern_version}-686",
+                i686    => "/boot/vmlinuz-${kern_version}-686",
             };
         "/boot/initrd-2.6-kvmU":
             ensure  => link,
-            target  => $architecture ? {
+            target  => $hardwaremodel ? {
                 x86_64  => "/boot/initrd.img-${kern_version}-amd64",
-                i386    => "/boot/initrd.img-${kern_version}-686",
+                i686    => "/boot/initrd.img-${kern_version}-686",
             };
     }
 

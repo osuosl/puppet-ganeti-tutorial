@@ -36,12 +36,12 @@ class ganeti_tutorial::instance_image {
     ganeti_tutorial::wget {
         "debian-boot":
             require     => Exec["install-instance-image"],
-            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-${debian_version}-${architecture}-boot.dump",
-            destination => "/var/cache/ganeti-instance-image/debian-${debian_version}-${architecture}-boot.dump";
+            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-${debian_version}-${hardwaremodel}-boot.dump",
+            destination => "/var/cache/ganeti-instance-image/debian-${debian_version}-${hardwaremodel}-boot.dump";
         "debian-root":
             require     => Exec["install-instance-image"],
-            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-${debian_version}-${architecture}-root.dump",
-            destination => "/var/cache/ganeti-instance-image/debian-${debian_version}-${architecture}-root.dump";
+            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-${debian_version}-${hardwaremodel}-root.dump",
+            destination => "/var/cache/ganeti-instance-image/debian-${debian_version}-${hardwaremodel}-root.dump";
     }
 
     ganeti_tutorial::unpack {
