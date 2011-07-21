@@ -2,6 +2,7 @@
 /usr/local/sbin/gnt-cluster init \
     --vg-name=ganeti -s 192.168.16.16 \
     --master-netdev=br0 \
+    -I hail \
     -H kvm:kernel_path=/boot/vmlinuz-2.6-kvmU,initrd_path=/boot/initrd-2.6-kvmU,root_path=/dev/sda2,nic_type=e1000,disk_type=scsi,vnc_bind_address=0.0.0.0,serial_console=true \
     -N link=br0 --enabled-hypervisors=kvm \
     ganeti.example.org
