@@ -403,9 +403,9 @@ postfix postfix/protocols       select  ipv4
 # packages and run commands in the target system.
 #d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh
 d-i preseed/late_command string \
-    in-target update-alternatives --set editor /usr/bin/vim.basic ; \
-    in-target update-alternatives --set pager /usr/bin/less ; \
-    in-target mkdir -p /etc/puppet/modules ; \
-    in-target git clone git://github.com/ramereth/puppet-ganeti-tutorial.git /etc/puppet/modules/ganeti_tutorial ; \
-    in-target ln -s /etc/puppet/modules/ganeti_tutorial /root/puppet ; \
-    in-target aptitude -y clean ; \
+    wget http://staff.osuosl.org/~ramereth/setup.sh ; \
+    chmod +x setup.sh ; \
+    mv setup.sh /target/ ; \
+    chroot /target /setup.sh ; \
+    rm /target/setup.sh ; \
+    in-target aptitude -y clean ;
