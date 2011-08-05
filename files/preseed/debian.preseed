@@ -407,4 +407,5 @@ d-i preseed/late_command string \
     in-target update-alternatives --set pager /usr/bin/less ; \
     in-target mkdir -p /etc/puppet/modules ; \
     in-target git clone git://github.com/ramereth/puppet-ganeti-tutorial.git /etc/puppet/modules/ganeti_tutorial ; \
+    in-target ln -s /etc/puppet/modules/ganeti_tutorial /root/puppet ; \
     in-target aptitude -y clean ; \
