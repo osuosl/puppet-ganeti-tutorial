@@ -1,2 +1,4 @@
 loop
+lp
+rtc
 drbd minor_count=128 usermode_helper=/bin/true
