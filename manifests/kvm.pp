@@ -2,10 +2,10 @@ class ganeti_tutorial::kvm {
     $kern_version = $operatingsystem ? {
         Debian => $lsbmajdistrelease ? {
             6 => "2.6.32-5",
-        }
+        },
         Ubuntu => $lsbdistrelease ? {
-            11.10   => "3.0.0-13",
-        }
+            11.10   => "3.0.0-14",
+        },
     }
 
     package {
