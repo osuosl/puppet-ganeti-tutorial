@@ -6,10 +6,10 @@ class ganeti_tutorial::kvm {
     file {
         "/boot/vmlinuz-kvmU":
             ensure  => link,
-            target  => "/boot/vmlinuz-${kernelrelease}",
+            target  => "/boot/vmlinuz-${kernelrelease}";
         "/boot/initrd-kvmU":
             ensure  => link,
-            target  => "/boot/initrd.img-${kernelrelease}",
+            target  => "/boot/initrd.img-${kernelrelease}";
     }
 
     service {
