@@ -1,13 +1,4 @@
 class ganeti_tutorial::kvm {
-    $kern_version = $operatingsystem ? {
-        Debian => $lsbmajdistrelease ? {
-            6 => "2.6.32-5",
-        },
-        Ubuntu => $lsbdistrelease ? {
-            11.10   => "3.0.0-14",
-        },
-    }
-
     package {
         "kvm":  ensure => installed;
     }
@@ -15,16 +6,10 @@ class ganeti_tutorial::kvm {
     file {
         "/boot/vmlinuz-kvmU":
             ensure  => link,
-            target  => $hardwaremodel ? {
-                x86_64  => "/boot/vmlinuz-${kern_version}-amd64",
-                i686    => "/boot/vmlinuz-${kern_version}-686",
-            };
+            target  => "/boot/vmlinuz-${kernelrelease}",
         "/boot/initrd-kvmU":
             ensure  => link,
-            target  => $hardwaremodel ? {
-                x86_64  => "/boot/initrd.img-${kern_version}-amd64",
-                i686    => "/boot/initrd.img-${kern_version}-686",
-            };
+            target  => "/boot/initrd.img-${kernelrelease}",
     }
 
     service {
