@@ -1,5 +1,5 @@
-$host_ip = "10.1.0.18"
-$drbd_ip = "192.168.16.18"
+$host_ip = "33.33.33.13"
+$drbd_ip = "33.33.34.13"
 
 include ganeti_tutorial
 include ganeti_tutorial::kvm
