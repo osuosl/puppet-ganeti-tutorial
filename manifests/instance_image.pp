@@ -5,7 +5,7 @@ class ganeti_tutorial::instance_image {
     $debian_version = "${ganeti_tutorial::params::debian_version}"
 
     package {
-        "qemu-utils":       ensure => installed;
+        #"qemu-utils":       ensure => installed;
         "dump":             ensure => installed;
         "kpartx":           ensure => installed;
     }
