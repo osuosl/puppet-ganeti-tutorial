@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+sed -i -e 's/-Werror//' Makefile
 make
 mkdir -p /usr/local/man/man1 /usr/local/lib/ganeti/iallocators
 cp {hbal,hscan,hspace} /usr/local/sbin/
