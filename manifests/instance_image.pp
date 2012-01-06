@@ -58,7 +58,6 @@ class ganeti_tutorial::instance_image {
             cwd     => "/root/src/ganeti-instance-image-${image_version}",
             creates => "/srv/ganeti/os/image/",
             require => [ Ganeti_tutorial::Unpack["instance-image"], 
-                Package["dump"], Package["kpartx"], Package["qemu-utils"],
-                File["/root/puppet"], ];
+                Package["dump"], Package["kpartx"], File["/root/puppet"], ];
     }
 }
