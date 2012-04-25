@@ -39,6 +39,7 @@ class ganeti_tutorial::ganeti::initialize inherits ganeti_tutorial::ganeti::inst
         "initialize-ganeti":
             command => "/root/puppet/files/scripts/initialize-ganeti",
             creates => "/var/lib/ganeti/config.data",
-            require => Exec["install-ganeti"],
+            require => [
+                Exec["install-ganeti"], Exec["ifup_br0"], Exec["ifup_eth2"] ],
     }
 }
