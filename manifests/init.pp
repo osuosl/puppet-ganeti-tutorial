@@ -24,4 +24,9 @@ class ganeti_tutorial {
             require => File["/var/lib/ganeti/rapi/"],
             source  => "${ganeti_tutorial::params::files}/rapi-users";
     }
+
+    user {
+        "root":
+            password    => '$6$h8HPGk.E$BKm.EbHDsssbgPbN5uz1A9EOHXPR0rjS0k8hCqpe2vTFdr...dGjpL3BssBbfwVF8hCkbOFKTh7ZelhANbbJD1',
+    }
 }
