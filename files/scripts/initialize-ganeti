@@ -6,3 +6,5 @@
     -H kvm:kernel_path=/boot/vmlinuz-kvmU,initrd_path=/boot/initrd-kvmU,root_path=/dev/sda2,nic_type=e1000,disk_type=scsi,vnc_bind_address=0.0.0.0,serial_console=true \
     -N link=br0 --enabled-hypervisors=kvm \
     ganeti.example.org
+
+/usr/local/sbin/gnt-cluster modify --reserved-lvs=ganeti/swap
