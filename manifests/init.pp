@@ -17,7 +17,7 @@ class ganeti_tutorial {
             ensure  => directory;
         "/root/puppet":
             ensure  => link,
-            target  => "/etc/puppet/modules/ganeti_tutorial";
+            target  => "/vagrant/modules/ganeti_tutorial";
         "/var/lib/ganeti/rapi/users":
             ensure  => "present",
             mode    => 640,

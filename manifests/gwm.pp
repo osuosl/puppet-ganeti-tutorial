@@ -49,7 +49,7 @@ class ganeti_tutorial::gwm {
             require => [ Package["fabric"], Package["virtualenv"], 
                         Package["python-dev"], Exec["unpack-gwm"] ];
         "syncdb-gwm":
-            command => "/root/puppet/files/scripts/syncdb-gwm",
+            command => "/vagrant/modules/ganeti_tutorial/files/scripts/syncdb-gwm",
             cwd     => "/root/ganeti_webmgr",
             creates => "/root/ganeti_webmgr/ganeti.db",
             require => Exec["deploy-gwm"];

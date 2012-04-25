@@ -21,7 +21,7 @@ class ganeti_tutorial::ganeti::install {
 
     exec {
         "install-ganeti":
-            command => "/root/puppet/files/scripts/install-ganeti",
+            command => "/vagrant/modules/ganeti_tutorial/files/scripts/install-ganeti",
             cwd     => "/root/src/ganeti-${ganeti_version}",
             creates => "/usr/local/sbin/gnt-cluster",
             require => Ganeti_tutorial::Unpack["ganeti"];
@@ -37,7 +37,7 @@ class ganeti_tutorial::ganeti::install {
 class ganeti_tutorial::ganeti::initialize inherits ganeti_tutorial::ganeti::install {
     exec {
         "initialize-ganeti":
-            command => "/root/puppet/files/scripts/initialize-ganeti",
+            command => "/vagrant/modules/ganeti_tutorial/files/scripts/initialize-ganeti",
             creates => "/var/lib/ganeti/config.data",
             require => [
                 Exec["install-ganeti"], Exec["ifup_br0"], Exec["ifup_eth2"],

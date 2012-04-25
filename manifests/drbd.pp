@@ -7,7 +7,7 @@ class ganeti_tutorial::drbd {
     file {
         "/etc/modules":
             ensure  => present,
-            source  => "/etc/puppet/modules/ganeti_tutorial/files/modules";
+            source  => "puppet:///modules/ganeti_tutorial/modules";
         "/etc/modprobe.d/local.conf":
             ensure  => present,
             source  => "puppet:///modules/ganeti_tutorial/modprobe.conf",
