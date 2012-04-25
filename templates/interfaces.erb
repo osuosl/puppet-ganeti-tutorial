@@ -18,13 +18,12 @@ iface br0 inet static
    bridge_stp off
    bridge_fd 0
 
-allow-hotplug eth2
-
-iface eth1 inet static
+auto eth2
+iface eth2 inet static
     address <%=drbd_ip%>
     netmask 255.255.255.0
     network 33.33.34.0
     broadcast 33.33.34.255
 
-allow-hotplug eth0
+auto eth0
 iface eth0 inet dhcp
