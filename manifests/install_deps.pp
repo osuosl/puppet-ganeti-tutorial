@@ -18,6 +18,7 @@ class ganeti_tutorial::install_deps {
         "vim":              ensure => installed;
         "screen":           ensure => installed;
         "git":              ensure => installed;
+        "python-pip":       ensure => "installed";
     }
 
     file {
