@@ -3,6 +3,7 @@ class ganeti_tutorial::params {
     $htools_version = "0.3.1"
     $image_version  = "0.5.1"
     $gwm_version    = "0.7.2"
-    $debian_version = "6.0.1"
+    $debian_version = "6.0.4"
+    $cirros_version = "0.3.0"
     $files          = "/vagrant/modules/ganeti_tutorial/files"
 }
