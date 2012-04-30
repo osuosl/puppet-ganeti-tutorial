@@ -8,6 +8,6 @@ include ganeti_tutorial::instance_image
 include ganeti_tutorial::htools
 include ganeti_tutorial::ganeti::install
 include ganeti_tutorial::ganeti::initialize
-#include ganeti_tutorial::gwm
+include ganeti_tutorial::gwm
 
 File { owner => "root", group => "root", }
