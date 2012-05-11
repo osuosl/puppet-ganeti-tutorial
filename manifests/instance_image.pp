@@ -2,7 +2,7 @@ class ganeti_tutorial::instance_image {
     require ganeti_tutorial::params
 
     $image_version  = "${ganeti_tutorial::params::image_version}"
-    $debian_version = "${ganeti_tutorial::params::debian_version}"
+    $ubuntu_version = "${ganeti_tutorial::params::ubuntu_version}"
     $cirros_version = "${ganeti_tutorial::params::cirros_version}"
 
     package {
@@ -20,10 +20,10 @@ class ganeti_tutorial::instance_image {
             ensure  => present,
             require => Exec["install-instance-image"],
             source  => "${ganeti_tutorial::params::files}/instance-image/variants.list";
-        "/etc/ganeti/instance-image/variants/debian-lenny.conf":
+        "/etc/ganeti/instance-image/variants/ubuntu-11.10.conf":
             ensure  => present,
             require => Exec["install-instance-image"],
-            source  => "${ganeti_tutorial::params::files}/instance-image/debian-lenny.conf";
+            source  => "${ganeti_tutorial::params::files}/instance-image/ubuntu-11.10.conf";
         "/etc/ganeti/instance-image/variants/cirros.conf":
             ensure  => present,
             require => Exec["install-instance-image"],
@@ -39,10 +39,10 @@ class ganeti_tutorial::instance_image {
     }
 
     ganeti_tutorial::wget {
-        "debian-root":
+        "ubuntu-root":
             require     => Exec["install-instance-image"],
-            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/debian-${debian_version}-${hardwaremodel}.tar.gz",
-            destination => "/var/cache/ganeti-instance-image/debian-${debian_version}-${hardwaremodel}.tar.gz";
+            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
+            destination => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz";
         "cirros-root":
             require     => Exec["install-instance-image"],
             source      => "http://launchpad.net/cirros/trunk/${cirros_version}/+download/cirros-${cirros_version}-${hardwaremodel}-lxc.tar.gz",
