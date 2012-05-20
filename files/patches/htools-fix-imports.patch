@@ -1,0 +1,143 @@
+Description: fix imports
+ GHC 7.4 finally deprecated the old System and Monad modules; their
+ replacements were available for a long while now. The patch just
+ updates the imports to the new style. This doesn't need forwarding
+ since upstream new codebase already includes them.
+Author: Iustin Pop <iustin@debian.org>
+Forwarded: not-needed
+Last-Update: 2012-03-24
+--- a/Ganeti/HTools/CLI.hs
++++ b/Ganeti/HTools/CLI.hs
+@@ -74,11 +74,11 @@
+ 
+ import Data.Maybe (fromMaybe)
+ import qualified Data.Version
+-import Monad
++import Control.Monad
+ import System.Console.GetOpt
++import System.Exit
+ import System.IO
+ import System.Info
+-import System
+ import Text.Printf (printf)
+ 
+ import qualified Ganeti.HTools.Version as Version(version)
+--- a/Ganeti/HTools/ExtLoader.hs
++++ b/Ganeti/HTools/ExtLoader.hs
+@@ -36,10 +36,10 @@
+     ) where
+ 
+ import Data.Maybe (isJust, fromJust)
+-import Monad
++import Control.Monad
++import System.Exit
+ import System.FilePath
+ import System.IO
+-import System
+ import Text.Printf (printf, hPrintf)
+ 
+ import qualified Ganeti.HTools.Luxi as Luxi
+--- a/hail.hs
++++ b/hail.hs
+@@ -27,10 +27,10 @@
+ 
+ import Data.List
+ import Data.Maybe (isJust, fromJust)
+-import Monad
+-import System (exitWith, ExitCode(..))
++import Control.Monad
++import System.Environment
++import System.Exit (exitWith, ExitCode(..))
+ import System.IO
+-import qualified System
+ 
+ import qualified Ganeti.HTools.Cluster as Cluster
+ 
+@@ -99,7 +99,7 @@
+ -- | Main function.
+ main :: IO ()
+ main = do
+-  cmd_args <- System.getArgs
++  cmd_args <- getArgs
+   (opts, args) <- parseOpts cmd_args "hail" options
+ 
+   let shownodes = optShowNodes opts
+--- a/hbal.hs
++++ b/hbal.hs
+@@ -30,12 +30,12 @@
+ import Data.List
+ import Data.Maybe (isJust, isNothing, fromJust)
+ import Data.IORef
+-import Monad
+-import System (exitWith, ExitCode(..))
++import Control.Monad
++import System.Exit (exitWith, ExitCode(..))
+ import System.IO
+ import System.Posix.Process
+ import System.Posix.Signals
+-import qualified System
++import System.Environment
+ 
+ import Text.Printf (printf, hPrintf)
+ 
+@@ -223,7 +223,7 @@
+ -- | Main function.
+ main :: IO ()
+ main = do
+-  cmd_args <- System.getArgs
++  cmd_args <- getArgs
+   (opts, args) <- parseOpts cmd_args "hbal" options
+ 
+   unless (null args) $ do
+--- a/hscan.hs
++++ b/hscan.hs
+@@ -28,11 +28,11 @@
+ module Main (main) where
+ 
+ import Data.Maybe (isJust, fromJust, fromMaybe)
+-import Monad
+-import System (exitWith, ExitCode(..))
+-import System.IO
++import Control.Monad
++import System.Environment
++import System.Exit (exitWith, ExitCode(..))
+ import System.FilePath
+-import qualified System
++import System.IO
+ 
+ import Text.Printf (printf)
+ 
+@@ -135,7 +135,7 @@
+ -- | Main function.
+ main :: IO ()
+ main = do
+-  cmd_args <- System.getArgs
++  cmd_args <- getArgs
+   (opts, clusters) <- parseOpts cmd_args "hscan" options
+   let local = "LOCAL"
+ 
+--- a/hspace.hs
++++ b/hspace.hs
+@@ -29,10 +29,10 @@
+ import Data.List
+ import Data.Maybe (isJust, fromJust)
+ import Data.Ord (comparing)
+-import Monad
+-import System (exitWith, ExitCode(..))
++import Control.Monad
++import System.Environment
++import System.Exit (exitWith, ExitCode(..))
+ import System.IO
+-import qualified System
+ 
+ import Text.Printf (printf, hPrintf)
+ 
+@@ -207,7 +207,7 @@
+ -- | Main function.
+ main :: IO ()
+ main = do
+-  cmd_args <- System.getArgs
++  cmd_args <- getArgs
+   (opts, args) <- parseOpts cmd_args "hspace" options
+ 
+   unless (null args) $ do

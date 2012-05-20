@@ -1,5 +1,11 @@
 #!/bin/bash
 set -e
+
+# Apply patch when ghc 7.4 and above are installed
+if [ -n "$(ghc --version | grep 7.4)" ] ; then
+    patch -p1 < /vagrant/modules/ganeti_tutorial/files/patches/htools-fix-imports.patch
+fi
+
 sed -i -e 's/-Werror//' Makefile
 make
 mkdir -p /usr/local/man/man1 /usr/local/lib/ganeti/iallocators
