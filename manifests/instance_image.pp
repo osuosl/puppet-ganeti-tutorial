@@ -2,7 +2,6 @@ class ganeti_tutorial::instance_image {
     require ganeti_tutorial::params
 
     $image_version  = "${ganeti_tutorial::params::image_version}"
-    $ubuntu_version = "${ganeti_tutorial::params::ubuntu_version}"
     $cirros_version = "${ganeti_tutorial::params::cirros_version}"
 
     package {
@@ -20,10 +19,6 @@ class ganeti_tutorial::instance_image {
             ensure  => present,
             require => Exec["install-instance-image"],
             source  => "${ganeti_tutorial::params::files}/instance-image/variants.list";
-        "/etc/ganeti/instance-image/variants/ubuntu-11.10.conf":
-            ensure  => present,
-            require => Exec["install-instance-image"],
-            source  => "${ganeti_tutorial::params::files}/instance-image/ubuntu-11.10.conf";
         "/etc/ganeti/instance-image/variants/cirros.conf":
             ensure  => present,
             require => Exec["install-instance-image"],
@@ -39,21 +34,11 @@ class ganeti_tutorial::instance_image {
     }
 
     ganeti_tutorial::wget {
-        "ubuntu-root":
-            require     => Exec["install-instance-image"],
-            source      => $hardwaremodel ? {
-                i686    => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-x86.tar.gz",
-                default => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
-            },
-            destination => $hardwaremodel ? {
-                i686    => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-x86.tar.gz",
-                default => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
-            };
         "cirros-root":
             require     => Exec["install-instance-image"],
             source      => $hardwaremodel ? {
-                i686    => "http://launchpad.net/cirros/trunk/${cirros_version}/+download/cirros-${cirros_version}-i386-lxc.tar.gz",
-                default => "http://launchpad.net/cirros/trunk/${cirros_version}/+download/cirros-${cirros_version}-${hardwaremodel}-lxc.tar.gz",
+                i686    => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/cirros-${cirros_version}-i386.tar.gz",
+                default => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/cirros-${cirros_version}-${hardwaremodel}.tar.gz",
             },
             destination => $hardwaremodel ? {
                 i686    => "/var/cache/ganeti-instance-image/cirros-${cirros_version}-i386.tar.gz",
@@ -76,5 +61,29 @@ class ganeti_tutorial::instance_image {
             creates => "/srv/ganeti/os/image/",
             require => [ Ganeti_tutorial::Unpack["instance-image"], 
                 Package["dump"], Package["kpartx"], File["/root/puppet"], ];
+    }
+}
+
+class ganeti_tutorial::instance_image::ubuntu {
+    $ubuntu_version = "${ganeti_tutorial::params::ubuntu_version}"
+
+    file {
+        "/etc/ganeti/instance-image/variants/ubuntu-11.10.conf":
+            ensure  => present,
+            require => Exec["install-instance-image"],
+            source  => "${ganeti_tutorial::params::files}/instance-image/ubuntu-11.10.conf";
+    }
+
+    ganeti_tutorial::wget {
+        "ubuntu-root":
+            require     => Exec["install-instance-image"],
+            source      => $hardwaremodel ? {
+                i686    => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-x86.tar.gz",
+                default => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
+            },
+            destination => $hardwaremodel ? {
+                i686    => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-x86.tar.gz",
+                default => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
+            };
     }
 }
