@@ -41,12 +41,24 @@ class ganeti_tutorial::instance_image {
     ganeti_tutorial::wget {
         "ubuntu-root":
             require     => Exec["install-instance-image"],
-            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
-            destination => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz";
+            source      => $hardwaremodel ? {
+                i686    => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-x86.tar.gz",
+                default => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
+            },
+            destination => $hardwaremodel ? {
+                i686    => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-x86.tar.gz",
+                default => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
+            };
         "cirros-root":
             require     => Exec["install-instance-image"],
-            source      => "http://launchpad.net/cirros/trunk/${cirros_version}/+download/cirros-${cirros_version}-${hardwaremodel}-lxc.tar.gz",
-            destination => "/var/cache/ganeti-instance-image/cirros-${cirros_version}-${hardwaremodel}.tar.gz";
+            source      => $hardwaremodel ? {
+                i686    => "http://launchpad.net/cirros/trunk/${cirros_version}/+download/cirros-${cirros_version}-i386-lxc.tar.gz",
+                default => "http://launchpad.net/cirros/trunk/${cirros_version}/+download/cirros-${cirros_version}-${hardwaremodel}-lxc.tar.gz",
+            },
+            destination => $hardwaremodel ? {
+                i686    => "/var/cache/ganeti-instance-image/cirros-${cirros_version}-i386.tar.gz",
+                default => "/var/cache/ganeti-instance-image/cirros-${cirros_version}-${hardwaremodel}.tar.gz",
+            };
     }
 
     ganeti_tutorial::unpack {
