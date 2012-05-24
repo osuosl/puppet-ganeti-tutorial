@@ -23,6 +23,10 @@ class ganeti_tutorial::instance_image {
             ensure  => present,
             require => Exec["install-instance-image"],
             source  => "${ganeti_tutorial::params::files}/instance-image/cirros.conf";
+        "/etc/ganeti/instance-image/variants/default.conf":
+            ensure  => "/etc/ganeti/instance-image/variants/cirros.conf",
+            require => [ Exec["install-instance-image"],
+                         File["/etc/ganeti/instance-image/variants/cirros.conf"] ];
         "/etc/ganeti/instance-image/hooks/interfaces":
             mode    => 755,
             require => Exec["install-instance-image"];
@@ -36,14 +40,8 @@ class ganeti_tutorial::instance_image {
     ganeti_tutorial::wget {
         "cirros-root":
             require     => Exec["install-instance-image"],
-            source      => $hardwaremodel ? {
-                i686    => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/cirros-${cirros_version}-i386.tar.gz",
-                default => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/cirros-${cirros_version}-${hardwaremodel}.tar.gz",
-            },
-            destination => $hardwaremodel ? {
-                i686    => "/var/cache/ganeti-instance-image/cirros-${cirros_version}-i386.tar.gz",
-                default => "/var/cache/ganeti-instance-image/cirros-${cirros_version}-${hardwaremodel}.tar.gz",
-            };
+            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/cirros-${cirros_version}-${hardwaremodel}.tar.gz",
+            destination => "/var/cache/ganeti-instance-image/cirros-${cirros_version}-${hardwaremodel}.tar.gz";
     }
 
     ganeti_tutorial::unpack {
@@ -77,13 +75,7 @@ class ganeti_tutorial::instance_image::ubuntu {
     ganeti_tutorial::wget {
         "ubuntu-root":
             require     => Exec["install-instance-image"],
-            source      => $hardwaremodel ? {
-                i686    => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-x86.tar.gz",
-                default => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
-            },
-            destination => $hardwaremodel ? {
-                i686    => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-x86.tar.gz",
-                default => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
-            };
+            source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz",
+            destination => "/var/cache/ganeti-instance-image/ubuntu-${ubuntu_version}-${hardwaremodel}.tar.gz";
     }
 }
