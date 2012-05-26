@@ -1,4 +1,7 @@
 #!/bin/bash
+if [ ! -x configure ] ; then
+    ./autogen.sh
+fi
 ./configure --localstatedir=/var --sysconfdir=/etc $@
 make
 make install

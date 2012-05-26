@@ -19,12 +19,22 @@ class ganeti_tutorial::ganeti::install {
             content => "";
     }
 
-    ganeti_tutorial::unpack {
-        "ganeti":
-            source      => "/root/src/ganeti-${ganeti_version}.tar.gz",
-            cwd         => "/root/src/",
-            creates     => "/root/src/ganeti-${ganeti_version}",
-            require     => File["/root/src"];
+    if $git {
+        vcsrepo {
+            "/root/src/ganeti-${ganeti_version}":
+                ensure      => present,
+                provider    => git,
+                source      => "git://git.ganeti.org/ganeti.git",
+                revision    => "${ganeti_version}";
+        }
+    } else {
+        ganeti_tutorial::unpack {
+            "ganeti":
+                source      => "/root/src/ganeti-${ganeti_version}.tar.gz",
+                cwd         => "/root/src/",
+                creates     => "/root/src/ganeti-${ganeti_version}",
+                require     => File["/root/src"];
+        }
     }
 
     if "$ganeti_version" < "2.5.0" {
@@ -66,4 +76,27 @@ class ganeti_tutorial::ganeti::initialize inherits ganeti_tutorial::ganeti::inst
                 Exec["install-ganeti"], Exec["ifup_br0"], Exec["ifup_eth2"],
                 Exec["modprobe_drbd"], ],
     }
+}
+
+class ganeti_tutorial::ganeti::git inherits ganeti_tutorial::ganeti::install {
+        package {
+            "automake":         ensure => present;
+            "autoconf":         ensure => present;
+            "pandoc":           ensure => present;
+            "python-docutils":  ensure => present;
+            "python-sphinx":    ensure => present;
+            "graphviz":         ensure => present;
+        }
+
+        Exec["install-ganeti"] {
+                require => [ Vcsrepo["/root/src/ganeti-${ganeti_version}"],
+                        Package["ghc6"],
+                        Package["libghc6-json-dev"],
+                        Package["libghc6-network-dev"],
+                        Package["libghc6-parallel-dev"],
+                        Package["libghc6-curl-dev"],
+                        Package["automake"], Package["autoconf"],
+                        Package["pandoc"], Package["graphviz"],
+                        Package["python-docutils"], Package["python-sphinx"], ],
+        }
 }
