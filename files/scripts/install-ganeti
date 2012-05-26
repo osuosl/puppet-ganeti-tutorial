@@ -1,4 +1,4 @@
 #!/bin/bash
-./configure --localstatedir=/var --sysconfdir=/etc
+./configure --localstatedir=/var --sysconfdir=/etc $@
 make
 make install

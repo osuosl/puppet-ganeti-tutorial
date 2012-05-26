@@ -1,14 +1,22 @@
 class ganeti_tutorial::ganeti::install {
     require ganeti_tutorial::params
+    include ganeti_tutorial::htools
 
     $ganeti_version = "${ganeti_tutorial::params::ganeti_version}"
+    $script_path    = "/vagrant/modules/ganeti_tutorial/files/scripts"
 
     file {
         "/etc/init.d/ganeti":
             ensure  => present,
             require => Exec["install-ganeti"],
             source  => "/root/src/ganeti-${ganeti_version}/doc/examples/ganeti.initd",
-            mode    => 755,
+            mode    => 755;
+        "/etc/ganeti":
+            ensure  => directory;
+        "/etc/ganeti/kvm-vif-bridge":
+            ensure  => present,
+            require => File["/etc/ganeti"],
+            content => "";
     }
 
     ganeti_tutorial::unpack {
@@ -19,12 +27,27 @@ class ganeti_tutorial::ganeti::install {
             require     => File["/root/src"];
     }
 
-    exec {
-        "install-ganeti":
-            command => "/vagrant/modules/ganeti_tutorial/files/scripts/install-ganeti",
-            cwd     => "/root/src/ganeti-${ganeti_version}",
-            creates => "/usr/local/sbin/gnt-cluster",
-            require => Ganeti_tutorial::Unpack["ganeti"];
+    if "$ganeti_version" < "2.5.0" {
+        exec {
+            "install-ganeti":
+                command => "${script_path}/install-ganeti",
+                cwd     => "/root/src/ganeti-${ganeti_version}",
+                creates => "/usr/local/sbin/gnt-cluster",
+                require => Ganeti_tutorial::Unpack["ganeti"];
+        }
+    } else {
+        exec {
+            "install-ganeti":
+                command =>
+                    "${script_path}/install-ganeti --enable-htools --enable-htools-rapi",
+                cwd     => "/root/src/ganeti-${ganeti_version}",
+                creates => "/usr/local/sbin/gnt-cluster",
+                require => [ Ganeti_tutorial::Unpack["ganeti"], Package["ghc6"],
+                        Package["libghc6-json-dev"],
+                        Package["libghc6-network-dev"],
+                        Package["libghc6-parallel-dev"],
+                        Package["libghc6-curl-dev"], ];
+        }
     }
 
     service {
