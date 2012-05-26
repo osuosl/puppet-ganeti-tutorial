@@ -2,7 +2,6 @@ class ganeti_tutorial::htools {
     require ganeti_tutorial::params
 
     $htools_version  = "${ganeti_tutorial::params::htools_version}"
-    $ganeti_version  = "${ganeti_tutorial::params::ganeti_version}"
 
     package {
         "ghc6":                 ensure  => installed;

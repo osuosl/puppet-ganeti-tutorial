@@ -2,7 +2,6 @@ class ganeti_tutorial::ganeti::install {
     require ganeti_tutorial::params
     include ganeti_tutorial::htools
 
-    $ganeti_version = "${ganeti_tutorial::params::ganeti_version}"
     $script_path    = "/vagrant/modules/ganeti_tutorial/files/scripts"
 
     file {
