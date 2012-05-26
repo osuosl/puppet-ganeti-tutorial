@@ -12,9 +12,20 @@ Ganeti](http://www.oscon.com/oscon2011/public/schedule/detail/18544) at [OSCON
 
 # Requirements
 
-This assumes that you have two to three Debian Squeeze VMs setup inside of
+This assumes that you have two to three Ubuntu 11.10 VMs setup inside of
 VirtualBox. Images can be downloaded from
 [here](http://ftp.osuosl.org/pub/osl/ganeti-tutorial/).
+
+# Switching Ganeti versions
+
+This module supports changing of the versions via two variables in
+`nodes/node#.pp`.
+
+* `git` = boolean (default: false)
+  * This pulls ganeti from its git repository if set to true.
+* `ganeti_version` = string (default: 2.5.1)
+  * Version of ganeti to use. Currently only supports 2.4.5, 2.5.1, and any of
+    the tagged versioned releases.
 
 # Copyright
 
