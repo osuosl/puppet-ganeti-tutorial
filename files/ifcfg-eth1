@@ -1,0 +1,5 @@
+DEVICE="eth1"
+BOOTPROTO="static"
+ONBOOT="yes"
+TYPE="Ethernet"
+BRIDGE="br0"

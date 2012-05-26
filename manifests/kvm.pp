@@ -1,6 +1,11 @@
 class ganeti_tutorial::kvm {
     package {
-        "kvm":  ensure => installed;
+        "kvm":
+            ensure => installed,
+            name    => $osfamily ? {
+                debian  => "kvm",
+                default => "qemu-kvm",
+            };
     }
 
     file {
@@ -9,12 +14,17 @@ class ganeti_tutorial::kvm {
             target  => "/boot/vmlinuz-${kernelrelease}";
         "/boot/initrd-kvmU":
             ensure  => link,
-            target  => "/boot/initrd.img-${kernelrelease}";
+            target  => $osfamily ? {
+                debian  => "/boot/initrd.img-${kernelrelease}",
+                redhat  => "/boot/initramfs-${kernelrelease}.img",
+            }
     }
 
-    service {
-        "qemu-kvm":
-            enable  => false,
-            require => Package["kvm"],
+    if $osfamily == "debian" {
+        service {
+            "qemu-kvm":
+                enable  => false,
+                require => Package["kvm"],
+        }
     }
 }

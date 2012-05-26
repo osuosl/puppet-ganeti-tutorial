@@ -2,6 +2,10 @@ class ganeti_tutorial::drbd {
     package {
         "drbd8-utils":
             ensure  => installed,
+            name    => $osfamily ? {
+                redhat  => "drbd83-utils",
+                default => "drbd8-utils",
+            };
     }
 
     file {

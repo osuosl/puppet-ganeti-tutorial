@@ -8,7 +8,10 @@ class ganeti_tutorial::ganeti::install {
         "/etc/init.d/ganeti":
             ensure  => present,
             require => Exec["install-ganeti"],
-            source  => "/root/src/ganeti-${ganeti_version}/doc/examples/ganeti.initd",
+            source  => $osfamily ? {
+                debian => "/root/src/ganeti-${ganeti_version}/doc/examples/ganeti.initd",
+                RedHat => "puppet:///modules/ganeti_tutorial/ganeti.init.redhat",
+            },
             mode    => 755;
         "/etc/ganeti":
             ensure  => directory;
@@ -51,7 +54,7 @@ class ganeti_tutorial::ganeti::install {
                     "${script_path}/install-ganeti --enable-htools --enable-htools-rapi",
                 cwd     => "/root/src/ganeti-${ganeti_version}",
                 creates => "/usr/local/sbin/gnt-cluster",
-                require => [ Ganeti_tutorial::Unpack["ganeti"], Package["ghc6"],
+                require => [ Ganeti_tutorial::Unpack["ganeti"], Package["ghc"],
                         Package["libghc6-json-dev"],
                         Package["libghc6-network-dev"],
                         Package["libghc6-parallel-dev"],
@@ -89,7 +92,7 @@ class ganeti_tutorial::ganeti::git inherits ganeti_tutorial::ganeti::install {
 
         Exec["install-ganeti"] {
                 require => [ Vcsrepo["/root/src/ganeti-${ganeti_version}"],
-                        Package["ghc6"],
+                        Package["ghc"],
                         Package["libghc6-json-dev"],
                         Package["libghc6-network-dev"],
                         Package["libghc6-parallel-dev"],

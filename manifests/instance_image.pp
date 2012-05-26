@@ -5,7 +5,6 @@ class ganeti_tutorial::instance_image {
     $cirros_version = "${ganeti_tutorial::params::cirros_version}"
 
     package {
-        #"qemu-utils":       ensure => installed;
         "dump":             ensure => installed;
         "kpartx":           ensure => installed;
     }

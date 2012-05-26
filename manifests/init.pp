@@ -32,6 +32,7 @@ class ganeti_tutorial {
 
     case $operatingsystem {
         debian:     { include ganeti_tutorial::debian }
+        centos:     { include ganeti_tutorial::centos }
         default:    { }
     }
 }

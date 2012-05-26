@@ -1,0 +1,128 @@
+From c084d6e0d83f194c4f9901dd075797d79ea79ed8 Mon Sep 17 00:00:00 2001
+From: Jun Futagawa <jfut@integ.jp>
+Date: Tue, 15 May 2012 16:38:07 +0900
+Subject: [PATCH] Add support to daemon-util for distributions without
+ start-stop-daemon
+
+This adds support to daemon-util for Red Hat based distributions that
+do not have a start-stop-daemon. If /sbin/start-stop-daemon is not
+available, daemon-util will source /etc/rc.d/init.d/functions.
+check(), start(), and stop() are updated to use the relevant functions
+from /etc/rc.d/init.d/functions.
+
+Thanks to Stephen Fromm and Michael Hanselmann for improving the error
+handling, style, and comments.
+
+Signed-off-by: Jun Futagawa <jfut@integ.jp>
+Reviewed-by: Michael Hanselmann <hansmi@google.com>
+---
+ daemons/daemon-util.in |   57 +++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 47 insertions(+), 10 deletions(-)
+
+diff --git a/daemons/daemon-util.in b/daemons/daemon-util.in
+index 819fd6b..db1fb47 100644
+--- a/daemons/daemon-util.in
++++ b/daemons/daemon-util.in
+@@ -42,6 +42,12 @@ if [[ -s $defaults_file ]]; then
+   . $defaults_file
+ fi
+ 
++# Meant to facilitate use utilities in /etc/rc.d/init.d/functions in case
++# start-stop-daemon is not available.
++_ignore_error() {
++  eval "$@" || :
++}
++
+ _daemon_pidfile() {
+   echo "@LOCALSTATEDIR@/run/ganeti/$1.pid"
+ }
+@@ -149,9 +155,17 @@ check() {
+   fi
+ 
+   local name="$1"; shift
+-
+-  start-stop-daemon --stop --signal 0 --quiet \
+-    --pidfile $(_daemon_pidfile $name)
++  local pidfile=$(_daemon_pidfile $name)
++  local daemonexec=$(_daemon_executable $name)
++
++  if type -p start-stop-daemon >/dev/null; then
++    start-stop-daemon --stop --signal 0 --quiet \
++      --pidfile $pidfile
++  else
++    _ignore_error status \
++      -p $pidfile \
++      $daemonexec
++  fi
+ }
+ 
+ # Starts a daemon
+@@ -162,6 +176,9 @@ start() {
+   fi
+ 
+   local name="$1"; shift
++  local pidfile=$(_daemon_pidfile $name)
++  local usergroup=$(_daemon_usergroup $plain_name)
++  local daemonexec=$(_daemon_executable $name)
+ 
+   # Convert daemon name to uppercase after removing "ganeti-" prefix
+   local plain_name=${name#ganeti-}
+@@ -172,11 +189,20 @@ start() {
+ 
+   @PKGLIBDIR@/ensure-dirs
+ 
+-  start-stop-daemon --start --quiet --oknodo \
+-    --pidfile $(_daemon_pidfile $name) \
+-    --startas $(_daemon_executable $name) \
+-    --chuid $(_daemon_usergroup $plain_name) \
+-    -- $args "$@"
++  if type -p start-stop-daemon >/dev/null; then
++    start-stop-daemon --start --quiet --oknodo \
++      --pidfile $pidfile \
++      --startas $daemonexec \
++      --chuid $usergroup \
++      -- $args "$@"
++  else
++    # TODO: Find a way to start daemon with a group, until then the group must
++    # be removed
++    _ignore_error daemon \
++      --pidfile $pidfile \
++      --user ${usergroup%:*} \
++      $daemonexec $args "$@"
++  fi
+ }
+ 
+ # Stops a daemon
+@@ -187,9 +213,14 @@ stop() {
+   fi
+ 
+   local name="$1"; shift
++  local pidfile=$(_daemon_pidfile $name)
+ 
+-  start-stop-daemon --stop --quiet --oknodo --retry 30 \
+-    --pidfile $(_daemon_pidfile $name)
++  if type -p start-stop-daemon >/dev/null; then
++    start-stop-daemon --stop --quiet --oknodo --retry 30 \
++      --pidfile $pidfile
++  else
++    _ignore_error killproc -p $pidfile $name
++  fi
+ }
+ 
+ # Starts a daemon if it's not yet running
+@@ -242,6 +273,12 @@ reload_ssh_keys() {
+   @RPL_SSH_INITD_SCRIPT@ restart
+ }
+ 
++# Read @SYSCONFDIR@/rc.d/init.d/functions if start-stop-daemon not available
++if ! type -p start-stop-daemon >/dev/null && \
++   [[ -f @SYSCONFDIR@/rc.d/init.d/functions ]]; then
++  _ignore_error . @SYSCONFDIR@/rc.d/init.d/functions
++fi
++
+ if [[ "$#" -lt 1 ]]; then
+   echo "Usage: $0 <action>" >&2
+   exit 1
+-- 
+1.7.9.5
+
