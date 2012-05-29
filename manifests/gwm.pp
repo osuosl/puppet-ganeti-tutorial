@@ -58,7 +58,7 @@ class ganeti_tutorial::gwm {
     }
 
     case $osfamily {
-        redhat:     { include ganeti_tutorial::centos::gwm }
+        redhat:     { include ganeti_tutorial::redhat::gwm }
         default:    { }
     }
 }

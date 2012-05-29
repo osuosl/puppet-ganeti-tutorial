@@ -1,13 +1,13 @@
-class ganeti_tutorial::centos {
+class ganeti_tutorial::redhat {
     include ganeti_tutorial::cabal
-    include ganeti_tutorial::centos::drbd
-    include ganeti_tutorial::centos::htools
-    include ganeti_tutorial::centos::ganeti
-    include ganeti_tutorial::centos::ganeti::initialize
-    include ganeti_tutorial::centos::kvm
+    include ganeti_tutorial::redhat::drbd
+    include ganeti_tutorial::redhat::htools
+    include ganeti_tutorial::redhat::ganeti
+    include ganeti_tutorial::redhat::ganeti::initialize
+    include ganeti_tutorial::redhat::kvm
 }
 
-class ganeti_tutorial::centos::drbd inherits ganeti_tutorial::drbd {
+class ganeti_tutorial::redhat::drbd inherits ganeti_tutorial::drbd {
     exec {
         "import-elrepo-gpg":
             command => "/bin/rpm --import http://elrepo.org/RPM-GPG-KEY-elrepo.org",
@@ -29,7 +29,7 @@ class ganeti_tutorial::centos::drbd inherits ganeti_tutorial::drbd {
     }
 }
 
-class ganeti_tutorial::centos::htools inherits ganeti_tutorial::htools {
+class ganeti_tutorial::redhat::htools inherits ganeti_tutorial::htools {
     if "$ganeti_version" < "2.5.0" {
         Exec["install-htools"] {
             require => [ Package["ghc"],
@@ -43,7 +43,7 @@ class ganeti_tutorial::centos::htools inherits ganeti_tutorial::htools {
     }
 }
 
-class ganeti_tutorial::centos::ganeti inherits ganeti_tutorial::ganeti::install {
+class ganeti_tutorial::redhat::ganeti inherits ganeti_tutorial::ganeti::install {
 
     if "$ganeti_version" >= "2.5.0" {
         Exec["install-ganeti"] {
@@ -79,7 +79,7 @@ class ganeti_tutorial::centos::ganeti inherits ganeti_tutorial::ganeti::install 
     }
 }
 
-class ganeti_tutorial::centos::ganeti::initialize inherits ganeti_tutorial::ganeti::initialize {
+class ganeti_tutorial::redhat::ganeti::initialize inherits ganeti_tutorial::ganeti::initialize {
     file {
         "/usr/lib/python2.6/site-packages/ganeti":
             ensure => link,
@@ -92,7 +92,7 @@ class ganeti_tutorial::centos::ganeti::initialize inherits ganeti_tutorial::gane
     }
 }
 
-class ganeti_tutorial::centos::kvm inherits ganeti_tutorial::kvm {
+class ganeti_tutorial::redhat::kvm inherits ganeti_tutorial::kvm {
     file {
         "/usr/bin/kvm":
             ensure  => link,
@@ -100,7 +100,7 @@ class ganeti_tutorial::centos::kvm inherits ganeti_tutorial::kvm {
     }
 }
 
-class ganeti_tutorial::centos::gwm inherits ganeti_tutorial::gwm {
+class ganeti_tutorial::redhat::gwm inherits ganeti_tutorial::gwm {
     Package["fabric"] {
         require => [ Package["python-pip"], File["/usr/local/bin/pip"], ],
     }

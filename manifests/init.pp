@@ -32,7 +32,7 @@ class ganeti_tutorial inherits ganeti_tutorial::params {
 
     case $osfamily {
         debian:     { include ganeti_tutorial::debian }
-        redhat:     { include ganeti_tutorial::centos }
+        redhat:     { include ganeti_tutorial::redhat }
         default:    { }
     }
 }
