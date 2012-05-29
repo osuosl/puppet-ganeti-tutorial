@@ -1,11 +1,8 @@
 class ganeti_tutorial::kvm {
+    $kvm_package_name   = $ganeti_tutorial::params::kvm_package_name
+
     package {
-        "kvm":
-            ensure => installed,
-            name    => $osfamily ? {
-                debian  => "kvm",
-                default => "qemu-kvm",
-            };
+        "kvm":  ensure => installed, name => $kvm_package_name;
     }
 
     file {

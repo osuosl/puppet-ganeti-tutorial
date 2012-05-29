@@ -1,11 +1,10 @@
-class ganeti_tutorial::drbd {
+class ganeti_tutorial::drbd inherits ganeti_tutorial::params {
+    $package_name = $ganeti_tutorial::params::drbd8_utils_package_name
+
     package {
         "drbd8-utils":
             ensure  => installed,
-            name    => $osfamily ? {
-                redhat  => "drbd83-utils",
-                default => "drbd8-utils",
-            };
+            name    => $package_name,
     }
 
     file {

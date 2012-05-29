@@ -1,17 +1,14 @@
 class ganeti_tutorial::ganeti::install {
-    require ganeti_tutorial::params
     include ganeti_tutorial::htools
 
-    $script_path    = "/vagrant/modules/ganeti_tutorial/files/scripts"
+    $ganeti_init_source = $ganeti_tutorial::params::ganeti_init_source
+    $files              = $ganeti_tutorial::params::files
 
     file {
         "/etc/init.d/ganeti":
             ensure  => present,
             require => Exec["install-ganeti"],
-            source  => $osfamily ? {
-                debian => "/root/src/ganeti-${ganeti_version}/doc/examples/ganeti.initd",
-                RedHat => "puppet:///modules/ganeti_tutorial/ganeti.init.redhat",
-            },
+            source  => $ganeti_init_source,
             mode    => 755;
         "/etc/ganeti":
             ensure  => directory;
@@ -42,7 +39,7 @@ class ganeti_tutorial::ganeti::install {
     if "$ganeti_version" < "2.5.0" {
         exec {
             "install-ganeti":
-                command => "${script_path}/install-ganeti",
+                command => "${files}/scripts/install-ganeti",
                 cwd     => "/root/src/ganeti-${ganeti_version}",
                 creates => "/usr/local/sbin/gnt-cluster",
                 require => Ganeti_tutorial::Unpack["ganeti"];
@@ -51,7 +48,7 @@ class ganeti_tutorial::ganeti::install {
         exec {
             "install-ganeti":
                 command =>
-                    "${script_path}/install-ganeti --enable-htools --enable-htools-rapi",
+                    "${files}/scripts/install-ganeti --enable-htools --enable-htools-rapi",
                 cwd     => "/root/src/ganeti-${ganeti_version}",
                 creates => "/usr/local/sbin/gnt-cluster",
                 require => [ Ganeti_tutorial::Unpack["ganeti"], Package["ghc"],
@@ -72,7 +69,7 @@ class ganeti_tutorial::ganeti::install {
 class ganeti_tutorial::ganeti::initialize inherits ganeti_tutorial::ganeti::install {
     exec {
         "initialize-ganeti":
-            command => "/vagrant/modules/ganeti_tutorial/files/scripts/initialize-ganeti",
+            command => "${files}/scripts/initialize-ganeti",
             creates => "/var/lib/ganeti/config.data",
             require => [
                 Exec["install-ganeti"], Exec["ifup_br0"], Exec["ifup_eth2"],

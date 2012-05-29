@@ -1,57 +1,47 @@
 class ganeti_tutorial::install_deps {
+    $iputils_arping     = $ganeti_tutorial::params::iputils_arping
+    $python_openssl     = $ganeti_tutorial::params::python_openssl
+    $python_pyinotify   = $ganeti_tutorial::params::python_pyinotify
+    $python_pyparsing   = $ganeti_tutorial::params::python_pyparsing
+    $vim_package_name   = $ganeti_tutorial::params::vim_package_name
+
     package {
         # Ganeti deps
         "bridge-utils":     ensure => installed;
         "iproute":          ensure => installed;
+        "iputils-arping":   ensure => installed, name => $iputils_arping;
         "lvm2":             ensure => installed;
         "make":             ensure => installed;
         "ndisc6":           ensure => installed;
         "openssl":          ensure => installed;
+        "python-openssl":   ensure => installed, name => $python_openssl;
         "python-paramiko":  ensure => installed;
         "python-pycurl":    ensure => installed;
+        "python-pyinotify": ensure => installed, name => $python_pyinotify;
+        "python-pyparsing": ensure => installed, name => $python_pyparsing;
         "python-simplejson": ensure => installed;
         "socat":            ensure => installed;
-        "python-pyinotify":
-            ensure  => installed,
-            name    => $osfamily ? {
-                redhat  => "python-inotify",
-                default => "python-pyinotify",
-            };
-        "iputils-arping":
-            ensure  => installed,
-            name    => $osfamily ? {
-                debian  => "iputils-arping",
-                default => "iputils",
-            };
-        "python-openssl":
-            ensure  => installed,
-            name    => $osfamily ? {
-                redhat  => "pyOpenSSL",
-                default => "python-openssl",
-            };
-        "python-pyparsing":
-            ensure  => installed,
-            name    => $osfamily ? {
-                redhat  => "pyparsing",
-                default => "python-pyparsing",
-            };
         # Misc
-        "screen":           ensure => installed;
         "git":              ensure => installed;
         "python-pip":       ensure => "installed";
-        "vim":
-            ensure  => installed,
-            name    => $osfamily ? {
-                redhat  => "vim-enhanced",
-                default => "vim",
-            };
+        "screen":           ensure => installed;
+        "vim":              ensure => installed, name => $vim_package_name
     }
 
     file {
         "/root/src":
             ensure  => present,
-            source  => "/vagrant/modules/ganeti_tutorial/files/src/",
+            source  => "puppet:///modules/ganeti_tutorial/src/",
             require => Package["make"],
             recurse => true;
+    }
+
+    if $osfamily == 'RedHat' {
+        file {
+            "/usr/local/bin/pip":
+                ensure  => link,
+                target  => "/usr/bin/pip-python",
+                require => Package["python-pip"],
+        }
     }
 }

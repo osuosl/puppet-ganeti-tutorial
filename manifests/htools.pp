@@ -1,27 +1,19 @@
 class ganeti_tutorial::htools {
-    require ganeti_tutorial::params
-
-    $htools_version  = "${ganeti_tutorial::params::htools_version}"
+    $htools_version         = $ganeti_tutorial::params::htools_version
+    $ghc_package_name       = $ganeti_tutorial::params::ghc_package_name
+    $libghc_network_dev     = $ganeti_tutorial::params::libghc_network_dev
+    $libghc_parallel_dev    = $ganeti_tutorial::params::libghc_parallel_dev
 
     package {
         "ghc":
             ensure  => installed,
-            name    => $osfamily ? {
-                debian  => "ghc6",
-                default => "ghc",
-            };
+            name    => $ghc_package_name;
         "libghc6-network-dev":
             ensure  => installed,
-            name    => $osfamily ? {
-                redhat  => "ghc-network-devel",
-                default => "libghc6-network-dev",
-            };
+            name    => $libghc_network_dev;
         "libghc6-parallel-dev":
             ensure  => installed,
-            name    => $osfamily ? {
-                redhat  => "ghc-parallel-devel",
-                default => "libghc6-parallel-dev",
-            };
+            name    => $libghc_parallel_dev;
     }
 
     if $osfamily == "redhat" {

@@ -1,6 +1,6 @@
 class ganeti_tutorial::debian {
     package {
-        "qemu-utils":       ensure => installed;
+        "qemu-utils": ensure => installed;
     }
 }
 

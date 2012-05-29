@@ -1,8 +1,6 @@
 class ganeti_tutorial::instance_image {
-    require ganeti_tutorial::params
-
-    $image_version  = "${ganeti_tutorial::params::image_version}"
-    $cirros_version = "${ganeti_tutorial::params::cirros_version}"
+    $image_version  = $ganeti_tutorial::params::image_version
+    $cirros_version = $ganeti_tutorial::params::cirros_version
 
     package {
         "dump":             ensure => installed;
@@ -33,7 +31,7 @@ class ganeti_tutorial::instance_image {
             ensure  => present,
             mode    => 755,
             require => Exec["install-instance-image"],
-            source  => "${ganeti_tutorial::params::files}/instance-image/hooks/zz_no-net";
+            source  => "puppet:///modules/ganeti_tutorial/instance-image/hooks/zz_no-net";
     }
 
     ganeti_tutorial::wget {

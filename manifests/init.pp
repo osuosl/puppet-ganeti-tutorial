@@ -1,11 +1,11 @@
 # Ganeti Tutorial
 
-class ganeti_tutorial {
-    require ganeti_tutorial::params
-
+class ganeti_tutorial inherits ganeti_tutorial::params {
     include ganeti_tutorial::install_deps
     include ganeti_tutorial::hosts
     include ganeti_tutorial::drbd
+
+    $files  = $ganeti_tutorial::params::files
 
     file {
         "/root/.ssh":
@@ -22,7 +22,7 @@ class ganeti_tutorial {
             ensure  => "present",
             mode    => 640,
             require => File["/var/lib/ganeti/rapi/"],
-            source  => "${ganeti_tutorial::params::files}/rapi-users";
+            source  => "puppet:///modules/ganeti_tutorial/rapi-users";
     }
 
     user {
@@ -30,9 +30,9 @@ class ganeti_tutorial {
             password    => '$6$h8HPGk.E$BKm.EbHDsssbgPbN5uz1A9EOHXPR0rjS0k8hCqpe2vTFdr...dGjpL3BssBbfwVF8hCkbOFKTh7ZelhANbbJD1',
     }
 
-    case $operatingsystem {
+    case $osfamily {
         debian:     { include ganeti_tutorial::debian }
-        centos:     { include ganeti_tutorial::centos }
+        redhat:     { include ganeti_tutorial::centos }
         default:    { }
     }
 }

@@ -1,10 +1,10 @@
 class ganeti_tutorial::gwm {
-    require ganeti_tutorial::params
-
-    $gwm_version = "${ganeti_tutorial::params::gwm_version}"
+    $python_dev  = $ganeti_tutorial::params::python_dev
+    $gwm_version = $ganeti_tutorial::params::gwm_version
+    $fab_path    = $ganeti_tutorial::params::fab_path
 
     package {
-        "python-dev":   ensure => "installed";
+        "python-dev":   ensure => "installed", name => $python_dev, ;
         "fabric":
             ensure      => "installed",
             require     => Package["python-pip"],
@@ -30,17 +30,17 @@ class ganeti_tutorial::gwm {
             require => Ganeti_Tutorial::Unpack["gwm"];
         "/etc/init.d/vncap":
             ensure  => present,
-            source  => "/vagrant/modules/ganeti_tutorial/files/gwm/vncap",
+            source  => "puppet:///modules/ganeti_tutorial/gwm/vncap",
             mode    => 755;
         "/etc/init.d/flashpolicy":
             ensure  => present,
-            source  => "/vagrant/modules/ganeti_tutorial/files/gwm/flashpolicy",
+            source  => "puppet:///modules/ganeti_tutorial/gwm/flashpolicy",
             mode    => 755;
     }
 
     exec { 
         "deploy-gwm":
-            command => "/usr/local/bin/fab prod deploy",
+            command => "$fab_path prod deploy",
             cwd     => "/root/ganeti_webmgr",
             timeout => "400",
             creates => "/root/ganeti_webmgr/bin/activate",
@@ -56,12 +56,19 @@ class ganeti_tutorial::gwm {
             enable  => true,
             require => [ File["/etc/init.d/flashpolicy"], Exec["deploy-gwm"], ];
     }
+
+    case $osfamily {
+        redhat:     { include ganeti_tutorial::centos::gwm }
+        default:    { }
+    }
 }
 
 class ganeti_tutorial::gwm::initialize {
+    $files       = $ganeti_tutorial::params::files
+
     exec {
         "syncdb-gwm":
-            command => "/vagrant/modules/ganeti_tutorial/files/scripts/syncdb-gwm",
+            command => "${files}/scripts/syncdb-gwm",
             cwd     => "/root/ganeti_webmgr",
             creates => "/root/ganeti_webmgr/ganeti.db",
             require => Exec["deploy-gwm"];

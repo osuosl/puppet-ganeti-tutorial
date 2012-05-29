@@ -99,3 +99,12 @@ class ganeti_tutorial::centos::kvm inherits ganeti_tutorial::kvm {
             target  => "/usr/libexec/qemu-kvm",
     }
 }
+
+class ganeti_tutorial::centos::gwm inherits ganeti_tutorial::gwm {
+    Package["fabric"] {
+        require => [ Package["python-pip"], File["/usr/local/bin/pip"], ],
+    }
+    Package["virtualenv"] {
+        require => [ Package["python-pip"], File["/usr/local/bin/pip"], ],
+    }
+}
