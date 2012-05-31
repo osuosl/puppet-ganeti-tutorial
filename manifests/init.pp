@@ -30,9 +30,9 @@ class ganeti_tutorial inherits ganeti_tutorial::params {
             password    => '$6$h8HPGk.E$BKm.EbHDsssbgPbN5uz1A9EOHXPR0rjS0k8hCqpe2vTFdr...dGjpL3BssBbfwVF8hCkbOFKTh7ZelhANbbJD1',
     }
 
-    case $osfamily {
+    case $operatingsystem {
         debian:     { include ganeti_tutorial::debian }
-        redhat:     { include ganeti_tutorial::redhat }
+        centos:     { include ganeti_tutorial::redhat }
         default:    { }
     }
 }
