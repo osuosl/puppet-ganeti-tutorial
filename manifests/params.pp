@@ -11,7 +11,7 @@ class ganeti_tutorial::params {
         'RedHat': {
             $drbd8_utils_package_name   = "drbd83-utils"
             $fab_path                   = "/usr/bin/fab"
-            $ganeti_init_source         = "/root/src/ganeti-${ganeti_version}/doc/examples/ganeti.initd"  
+            $ganeti_init_source         = "puppet:///modules/ganeti_tutorial/ganeti.init.redhat"  
             $ghc_package_name           = "ghc"
             $iputils_arping             = "iputils"
             $kvm_package_name           = "qemu-kvm"
@@ -27,7 +27,7 @@ class ganeti_tutorial::params {
         'Debian': {
             $drbd8_utils_package_name   = "drbd8-utils"
             $fab_path                   = "/usr/local/bin/fab"
-            $ganeti_init_source         = "puppet:///modules/ganeti_tutorial/ganeti.init.redhat"  
+            $ganeti_init_source         = "/root/src/ganeti-${ganeti_version}/doc/examples/ganeti.initd"  
             $ghc_package_name           = "ghc6"
             $iputils_arping             = "iputils-arping"
             $kvm_package_name           = "kvm"
