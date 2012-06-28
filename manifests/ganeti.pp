@@ -32,7 +32,7 @@ class ganeti_tutorial::ganeti::install {
         source  => "/root/src/ganeti-${ganeti_version}.tar.gz",
         cwd     => "/root/src/",
         creates => "/root/src/ganeti-${ganeti_version}",
-        require => File["/root/src"];
+        require => Ganeti_tutorial::Wget["ganeti-tgz"];
     }
   }
 
@@ -56,6 +56,14 @@ class ganeti_tutorial::ganeti::install {
           Package["libghc6-parallel-dev"], Package["libghc6-curl-dev"], ];
     }
   }
+
+  ganeti_tutorial::wget {
+    "ganeti-tgz":
+      source      => "http://ganeti.googlecode.com/files/ganeti-${ganeti_version}.tar.gz",
+      destination => "/root/src/ganeti-${ganeti_version}.tar.gz",
+      require     => File["/root/src"];
+  }
+
 
   service {
     "ganeti":

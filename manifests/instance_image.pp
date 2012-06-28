@@ -39,6 +39,10 @@ class ganeti_tutorial::instance_image {
       require     => Exec["install-instance-image"],
       source      => "http://staff.osuosl.org/~ramereth/ganeti-tutorial/cirros-${cirros_version}-${hardwaremodel}.tar.gz",
       destination => "/var/cache/ganeti-instance-image/cirros-${cirros_version}-${hardwaremodel}.tar.gz";
+    "instance-image-tgz":
+      source      => "http://ftp.osuosl.org/pub/osl/ganeti-instance-image/ganeti-instance-image-${image_version}.tar.gz",
+      destination => "/root/src/ganeti-instance-image-${image_version}.tar.gz",
+      require     => File["/root/src"];
   }
 
   ganeti_tutorial::unpack {
@@ -46,7 +50,7 @@ class ganeti_tutorial::instance_image {
       source  => "/root/src/ganeti-instance-image-${image_version}.tar.gz",
       cwd     => "/root/src/",
       creates => "/root/src/ganeti-instance-image-${image_version}",
-      require => File["/root/src"];
+      require => Ganeti_tutorial::Wget["instance-image-tgz"];
   }
 
   exec {

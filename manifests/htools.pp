@@ -41,7 +41,14 @@ class ganeti_tutorial::htools {
         source  => "/root/src/ganeti-htools-${htools_version}.tar.gz",
         cwd     => "/root/src",
         creates => "/root/src/ganeti-htools-${htools_version}",
-        require => File["/root/src"];
+        require => Ganeti_tutorial::Wget["htools-tgz"];
+    }
+
+    ganeti_tutorial::wget {
+      "htools-tgz":
+        source      => "http://ganeti.googlecode.com/files/ganeti-htools-${htools_version}.tar.gz",
+        destination => "/root/src/ganeti-htools-${htools_version}.tar.gz",
+        require     => File["/root/src"];
     }
 
     exec {
