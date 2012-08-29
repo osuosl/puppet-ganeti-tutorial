@@ -23,7 +23,6 @@ class ganeti_tutorial::install_deps {
     "socat":            ensure => installed;
     # Misc
     "git":              ensure => installed;
-    "python-pip":       ensure => "installed";
     "screen":           ensure => installed;
     "vim":              ensure => installed, name => $vim_package_name
     }

@@ -5,6 +5,7 @@ class ganeti_tutorial::gwm {
 
   package {
     "python-dev":   ensure => "installed", name => $python_dev, ;
+    "python-pip":   ensure => "installed";
     "fabric":
       ensure    => "installed",
       require   => Package["python-pip"],
