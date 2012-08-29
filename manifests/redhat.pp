@@ -1,10 +1,16 @@
 class ganeti_tutorial::redhat {
-  include ganeti_tutorial::cabal
   include ganeti_tutorial::redhat::drbd
   include ganeti_tutorial::redhat::htools
   include ganeti_tutorial::redhat::ganeti
   include ganeti_tutorial::redhat::ganeti::initialize
   include ganeti_tutorial::redhat::kvm
+
+  yumrepo {
+    "ganeti":
+      baseurl         => "http://ftp.osuosl.org/pub/osl/ganeti-centos-6/\$basearch/",
+      enabled         => "1",
+      gpgcheck        => "0";
+  }
 }
 
 class ganeti_tutorial::redhat::drbd inherits ganeti_tutorial::drbd {
@@ -46,33 +52,16 @@ class ganeti_tutorial::redhat::drbd inherits ganeti_tutorial::drbd {
 }
 
 class ganeti_tutorial::redhat::htools inherits ganeti_tutorial::htools {
-  if "$ganeti_version" < "2.5.0" {
-    Exec["install-htools"] {
-      require => [ Package["ghc"],
-        Ganeti_tutorial::Cabal::Install["json"],
-        Ganeti_tutorial::Cabal::Install["curl"],
-        Ganeti_tutorial::Cabal::Install["network"],
-        Ganeti_tutorial::Cabal::Install["QuickCheck"],
-        Ganeti_tutorial::Cabal::Install["parallel"],
-        Ganeti_tutorial::Unpack["htools"], ],
-    }
+  Package["libghc6-curl-dev"] {
+    require => Yumrepo["ganeti"],
+  }
+
+  package {
+    "libcurl-devel": ensure => installed;
   }
 }
 
 class ganeti_tutorial::redhat::ganeti inherits ganeti_tutorial::ganeti::install {
-
-  if "$ganeti_version" >= "2.5.0" {
-    Exec["install-ganeti"] {
-      require => [ Package["ghc"],
-        Ganeti_tutorial::Cabal::Install["json"],
-        Ganeti_tutorial::Cabal::Install["curl"],
-        Ganeti_tutorial::Cabal::Install["network"],
-        Ganeti_tutorial::Cabal::Install["QuickCheck"],
-        Ganeti_tutorial::Cabal::Install["parallel"], 
-        Ganeti_tutorial::Unpack["ganeti"],
-        Exec["patch-daemon-util"], ],
-    }
-  }
 
   File["/etc/init.d/ganeti"] {
     require => [ Exec["install-ganeti"], File["/etc/sysconfig/ganeti"], ],
