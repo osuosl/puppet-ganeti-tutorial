@@ -8,25 +8,41 @@ class ganeti_tutorial::redhat {
 }
 
 class ganeti_tutorial::redhat::drbd inherits ganeti_tutorial::drbd {
-  exec {
-    "import-elrepo-gpg":
-      command => "/bin/rpm --import http://elrepo.org/RPM-GPG-KEY-elrepo.org",
-      creates => "/etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org";
-    "install-elrepo-release":
-      command => "/bin/rpm -Uhv http://elrepo.org/elrepo-release-6-4.el6.elrepo.noarch.rpm",
-      creates => "/etc/yum.repos.d/elrepo.repo",
-      require => Exec["import-elrepo-gpg"];
+  yumrepo {
+    "elrepo":
+      baseurl         => "http://elrepo.org/linux/elrepo/el6/\$basearch/",
+      mirrorlist      => "http://elrepo.org/mirrors-elrepo.el6",
+      enabled         => "1",
+      gpgcheck        => "1",
+      gpgkey          => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org",
+      require         => File["RPM-GPG-KEY-elrepo.org"];
+  }
+
+  file {
+    "RPM-GPG-KEY-elrepo.org":
+      path    => "/etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org",
+      ensure  => present,
+      source  => "puppet:///modules/ganeti_tutorial/RPM-GPG-KEY-elrepo.org";
   }
 
   package {
     "kmod-drbd83":
       ensure  => installed,
-      require => Exec["install-elrepo-release"];
+      require => Yumrepo["elrepo"];
   }
 
   Package["drbd8-utils"] {
-    require => Exec["install-elrepo-release"],
+    require => Yumrepo["elrepo"],
   }
+
+  Exec["modprobe_drbd"] {
+    require => [
+      File["/etc/modprobe.d/local.conf"],
+      Package["drbd8-utils"],
+      Package["kmod-drbd83"],
+      Yumrepo["elrepo"], ],
+  }
+
 }
 
 class ganeti_tutorial::redhat::htools inherits ganeti_tutorial::htools {
