@@ -31,7 +31,11 @@ class ganeti_tutorial inherits ganeti_tutorial::params {
   }
 
   case $operatingsystem {
-    debian:   { include ganeti_tutorial::debian }
+    debian:   {
+      include ganeti_tutorial::debian
+      include ganeti_tutorial::apt
+    }
+    ubuntu:   { include ganeti_tutorial::apt }
     centos:   { include ganeti_tutorial::redhat }
     default:  { }
   }
