@@ -106,6 +106,13 @@ class ganeti_tutorial::redhat::kvm inherits ganeti_tutorial::kvm {
 }
 
 class ganeti_tutorial::redhat::gwm inherits ganeti_tutorial::gwm {
+  file {
+    "/usr/local/bin/pip":
+      ensure  => link,
+      target  => "/usr/bin/pip-python",
+      require => Package["python-pip"],
+  }
+
   Package["fabric"] {
     require => [ Package["python-pip"], File["/usr/local/bin/pip"], ],
   }

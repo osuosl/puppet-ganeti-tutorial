@@ -34,13 +34,4 @@ class ganeti_tutorial::install_deps {
       require => Package["make"],
       recurse => true;
   }
-
-  if $osfamily == 'RedHat' {
-    file {
-      "/usr/local/bin/pip":
-        ensure  => link,
-        target  => "/usr/bin/pip-python",
-        require => Package["python-pip"],
-    }
-  }
 }
