@@ -1,28 +1,6 @@
 class ganeti_tutorial::htools {
   $htools_version         = $ganeti_tutorial::params::htools_version
-  $ghc_package_name       = $ganeti_tutorial::params::ghc_package_name
-  $libghc_curl_dev        = $ganeti_tutorial::params::libghc_curl_dev
-  $libghc_json_dev        = $ganeti_tutorial::params::libghc_json_dev
-  $libghc_network_dev     = $ganeti_tutorial::params::libghc_network_dev
-  $libghc_parallel_dev    = $ganeti_tutorial::params::libghc_parallel_dev
-
-  package {
-    "ghc":
-      ensure  => installed,
-      name    => $ghc_package_name;
-    "libghc6-curl-dev":
-      ensure  => installed,
-      name    => $libghc_curl_dev;
-    "libghc6-json-dev":
-      ensure  => installed,
-      name    => $libghc_json_dev;
-    "libghc6-network-dev":
-      ensure  => installed,
-      name    => $libghc_network_dev;
-    "libghc6-parallel-dev":
-      ensure  => installed,
-      name    => $libghc_parallel_dev;
-  }
+  include ganeti_tutorial::htools::install_deps
 
   if "$ganeti_version" < "2.5.0" {
     ganeti_tutorial::unpack {
@@ -49,5 +27,31 @@ class ganeti_tutorial::htools {
           Package["libghc6-network-dev"], Package["libghc6-parallel-dev"],
           Package["libghc6-curl-dev"], Ganeti_tutorial::Unpack["htools"],];
     }
+  }
+}
+
+class ganeti_tutorial::htools::install_deps {
+  $ghc_package_name       = $ganeti_tutorial::params::ghc_package_name
+  $libghc_curl_dev        = $ganeti_tutorial::params::libghc_curl_dev
+  $libghc_json_dev        = $ganeti_tutorial::params::libghc_json_dev
+  $libghc_network_dev     = $ganeti_tutorial::params::libghc_network_dev
+  $libghc_parallel_dev    = $ganeti_tutorial::params::libghc_parallel_dev
+
+  package {
+    "ghc":
+      ensure  => installed,
+      name    => $ghc_package_name;
+    "libghc6-curl-dev":
+      ensure  => installed,
+      name    => $libghc_curl_dev;
+    "libghc6-json-dev":
+      ensure  => installed,
+      name    => $libghc_json_dev;
+    "libghc6-network-dev":
+      ensure  => installed,
+      name    => $libghc_network_dev;
+    "libghc6-parallel-dev":
+      ensure  => installed,
+      name    => $libghc_parallel_dev;
   }
 }

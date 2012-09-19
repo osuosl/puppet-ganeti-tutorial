@@ -2,6 +2,7 @@
 
 class ganeti_tutorial inherits ganeti_tutorial::params {
   include ganeti_tutorial::install_deps
+  include ganeti_tutorial::htools::install_deps
   include ganeti_tutorial::hosts
   include ganeti_tutorial::drbd
 
