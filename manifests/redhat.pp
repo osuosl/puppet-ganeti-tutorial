@@ -1,8 +1,5 @@
 class ganeti_tutorial::redhat {
   include ganeti_tutorial::redhat::drbd
-  include ganeti_tutorial::redhat::htools
-  include ganeti_tutorial::redhat::ganeti
-  include ganeti_tutorial::redhat::ganeti::initialize
   include ganeti_tutorial::redhat::kvm
 
   yumrepo {
@@ -51,7 +48,7 @@ class ganeti_tutorial::redhat::drbd inherits ganeti_tutorial::drbd {
 
 }
 
-class ganeti_tutorial::redhat::htools inherits ganeti_tutorial::htools {
+class ganeti_tutorial::redhat::htools inherits ganeti_tutorial::htools::install_deps {
   Package["libghc6-curl-dev"] {
     require => Yumrepo["ganeti"],
   }

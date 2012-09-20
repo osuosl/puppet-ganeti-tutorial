@@ -28,6 +28,10 @@ class ganeti_tutorial::htools {
           Package["libghc6-curl-dev"], Ganeti_tutorial::Unpack["htools"],];
     }
   }
+  case $osfamily {
+    redhat:   { include ganeti_tutorial::redhat::htools }
+    default:  { }
+  }
 }
 
 class ganeti_tutorial::htools::install_deps {

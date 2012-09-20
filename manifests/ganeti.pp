@@ -70,6 +70,11 @@ class ganeti_tutorial::ganeti::install {
       enable  => true,
       require => File["/etc/init.d/ganeti"],
   }
+
+  case $osfamily {
+    redhat:   { include ganeti_tutorial::redhat::ganeti }
+    default:  { }
+  }
 }
 
 class ganeti_tutorial::ganeti::initialize inherits ganeti_tutorial::ganeti::install {
@@ -80,6 +85,10 @@ class ganeti_tutorial::ganeti::initialize inherits ganeti_tutorial::ganeti::inst
       require => [
         Exec["install-ganeti"], Exec["ifup_br0"], Exec["ifup_eth2"],
         Exec["modprobe_drbd"], ],
+  }
+  case $osfamily {
+    redhat:   { include ganeti_tutorial::redhat::ganeti::initialize }
+    default:  { }
   }
 }
 
