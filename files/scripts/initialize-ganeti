@@ -1,4 +1,7 @@
 #!/bin/bash
+/bin/sed -i -e 's/node.*localhost /localhost /' /etc/hosts
+/bin/sed -i -e 's/node.*localhost\t/localhost /' /etc/hosts
+
 /usr/local/sbin/gnt-cluster init \
     --vg-name=ganeti -s 33.33.34.11 \
     --master-netdev=br0 \
