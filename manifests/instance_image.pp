@@ -60,6 +60,11 @@ class ganeti_tutorial::instance_image {
       creates => "/srv/ganeti/os/image/",
       require => [ Ganeti_tutorial::Unpack["instance-image"], 
         Package["dump"], Package["kpartx"], File["/root/puppet"], ];
+    "patch-image-26":
+      command => "/usr/bin/patch -p1 < ${ganeti_tutorial::params::files}/src/2.6-support.patch",
+      cwd     => "/srv/ganeti/os/image",
+      unless  => "/bin/grep INSTANCE_BE_maxmem /srv/ganeti/os/image/common.sh",
+      require => [ Exec["install-instance-image"], Package["patch"], ];
   }
 }
 

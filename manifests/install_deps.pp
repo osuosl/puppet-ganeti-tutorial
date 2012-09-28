@@ -14,6 +14,7 @@ class ganeti_tutorial::install_deps {
     "make":             ensure => installed;
     "ndisc6":           ensure => installed;
     "openssl":          ensure => installed;
+    "patch":            ensure => installed;
     "python-openssl":   ensure => installed, name => $python_openssl;
     "python-paramiko":  ensure => installed;
     "python-pycurl":    ensure => installed;

@@ -72,8 +72,6 @@ class ganeti_tutorial::redhat::ganeti inherits ganeti_tutorial::ganeti::install 
       require => [ Ganeti_tutorial::Unpack["ganeti"], Package["patch"], ];
   }
 
-  package { "patch": ensure => installed; }
-
   file {
     "/etc/sysconfig/ganeti":
       ensure  => present,
