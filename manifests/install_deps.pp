@@ -17,7 +17,6 @@ class ganeti_tutorial::install_deps {
     "patch":            ensure => installed;
     "python-openssl":   ensure => installed, name => $python_openssl;
     "python-paramiko":  ensure => installed;
-    "python-pycurl":    ensure => installed;
     "python-pyinotify": ensure => installed, name => $python_pyinotify;
     "python-pyparsing": ensure => installed, name => $python_pyparsing;
     "python-simplejson": ensure => installed;
@@ -27,6 +26,28 @@ class ganeti_tutorial::install_deps {
     "screen":           ensure => installed;
     "vim":              ensure => installed, name => $vim_package_name
     }
+
+  # Install pycurl linked against openssl instead of gnutls
+  if ($operatingsystem == "Ubuntu") and ($operatingsystemrelease >= "12.04") {
+    ganeti_tutorial::wget {
+      "pycurl-ubuntu-dpkg":
+        source      => "http://ftp.osuosl.org/pub/osl/ganeti-tutorial/python-pycurl_7.19.0-4ubuntu4~precise1_amd64.deb",
+        destination => "/root/src/python-pycurl.deb",
+        require     => File["/root/src"];
+    }
+
+    package {
+      "libcurl3":   ensure => installed;
+      "python-pycurl":
+        provider    => "dpkg",
+        source      => "/root/src/python-pycurl.deb",
+        ensure      => "latest",
+        require     => [ Ganeti_tutorial::Wget["pycurl-ubuntu-dpkg"],
+          Package["libcurl3"] ];
+    }
+  } else {
+    package { "python-pycurl":    ensure => installed; }
+  }
 
   file {
     "/root/src":
