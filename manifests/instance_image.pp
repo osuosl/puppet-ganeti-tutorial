@@ -1,4 +1,5 @@
 class ganeti_tutorial::instance_image {
+  $gii_26_patch   = $ganeti_tutorial::params::gii_26_patch
   $image_version  = $ganeti_tutorial::params::image_version
   $cirros_version = $ganeti_tutorial::params::cirros_version
 
@@ -61,7 +62,7 @@ class ganeti_tutorial::instance_image {
       require => [ Ganeti_tutorial::Unpack["instance-image"], 
         Package["dump"], Package["kpartx"], File["/root/puppet"], ];
     "patch-image-26":
-      command => "/usr/bin/patch -p1 < ${ganeti_tutorial::params::files}/src/2.6-support.patch",
+      command => "/usr/bin/patch -p1 < ${ganeti_tutorial::params::files}/src/${gii_26_patch}",
       cwd     => "/srv/ganeti/os/image",
       unless  => "/bin/grep INSTANCE_BE_maxmem /srv/ganeti/os/image/common.sh",
       require => [ Exec["install-instance-image"], Package["patch"], ];
