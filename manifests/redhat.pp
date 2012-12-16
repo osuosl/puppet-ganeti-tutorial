@@ -26,6 +26,9 @@ class ganeti_tutorial::redhat::drbd inherits ganeti_tutorial::drbd {
       path    => "/etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org",
       ensure  => present,
       source  => "puppet:///modules/ganeti_tutorial/RPM-GPG-KEY-elrepo.org";
+    "/etc/yum.repos.d/CentOS-Base.repo":
+      ensure  => present,
+      source  => "puppet:///modules/ganeti_tutorial/CentOS-Base.repo";
   }
 
   package {
