@@ -1,5 +1,6 @@
 class ganeti_tutorial::install_deps {
   $iputils_arping   = $ganeti_tutorial::params::iputils_arping
+  $pycurl_deb       = $ganeti_tutorial::params::pycurl_deb
   $python_openssl   = $ganeti_tutorial::params::python_openssl
   $python_pyinotify = $ganeti_tutorial::params::python_pyinotify
   $python_pyparsing = $ganeti_tutorial::params::python_pyparsing
@@ -31,7 +32,7 @@ class ganeti_tutorial::install_deps {
   if ($operatingsystem == "Ubuntu") and ($operatingsystemrelease >= "12.04") {
     ganeti_tutorial::wget {
       "pycurl-ubuntu-dpkg":
-        source      => "http://ftp.osuosl.org/pub/osl/ganeti-tutorial/python-pycurl_7.19.0-4ubuntu4~precise1_amd64.deb",
+        source      => "http://ftp.osuosl.org/pub/osl/ganeti-tutorial/${pycurl_deb}",
         destination => "/root/src/python-pycurl.deb",
         require     => File["/root/src"];
     }

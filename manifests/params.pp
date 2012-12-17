@@ -51,4 +51,11 @@ class ganeti_tutorial::params {
       $vim_package_name         = "vim"
     }
   }
+
+  if $operatingsystem == "Ubuntu" {
+    case $operatingsystemrelease {
+      12.04: { $pycurl_deb = "python-pycurl_7.19.0-4ubuntu4~precise1_amd64.deb" }
+      12.10: { $pycurl_deb = "python-pycurl_7.19.0-5ubuntu2_amd64.deb" }
+    }
+  }
 }
