@@ -3,7 +3,7 @@
 @@ -24,6 +24,7 @@
  SFDISK="/sbin/sfdisk"
  QEMU_IMG="/usr/bin/qemu-img"
- MKDIR_P="/bin/mkdir -p"
+ MKDIR_P="/bin//mkdir -p"
 +INSTANCE_MEM=
  
  CLEANUP=( )
