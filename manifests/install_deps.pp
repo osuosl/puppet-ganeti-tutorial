@@ -9,6 +9,7 @@ class ganeti_tutorial::install_deps {
   package {
     # Ganeti deps
     "bridge-utils":     ensure => installed;
+    "fping":            ensure => installed;
     "iproute":          ensure => installed;
     "iputils-arping":   ensure => installed, name => $iputils_arping;
     "lvm2":             ensure => installed;
@@ -16,6 +17,8 @@ class ganeti_tutorial::install_deps {
     "ndisc6":           ensure => installed;
     "openssl":          ensure => installed;
     "patch":            ensure => installed;
+    "python-bitarray":  ensure => installed;
+    "python-ipaddr":    ensure => installed;
     "python-openssl":   ensure => installed, name => $python_openssl;
     "python-paramiko":  ensure => installed;
     "python-pyinotify": ensure => installed, name => $python_pyinotify;

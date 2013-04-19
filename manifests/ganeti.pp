@@ -52,8 +52,13 @@ class ganeti_tutorial::ganeti::install {
         cwd     => "/root/src/ganeti-${ganeti_version}",
         creates => "/usr/local/sbin/gnt-cluster",
         require => [ Ganeti_tutorial::Unpack["ganeti"], Package["ghc"],
-          Package["libghc6-json-dev"], Package["libghc6-network-dev"],
-          Package["libghc6-parallel-dev"], Package["libghc6-curl-dev"], ];
+          Package["libghc-attoparsec-dev"],Package["libghc-crypto-dev"],
+          Package["libghc-curl-dev"], Package["libghc-deepseq-dev"],
+          Package["libghc-hinotify-dev"], Package["libghc-hslogger-dev"],
+          Package["libghc-json-dev"], Package["libghc-network-dev"],
+          Package["libghc-parallel-dev"], Package["libghc-regex-pcre-dev"],
+          Package["libghc-utf8-string-dev"], Package["libghc-vector-dev"],
+          Package["libpcre-dev"], ];
     }
   }
 
@@ -104,13 +109,15 @@ class ganeti_tutorial::ganeti::git inherits ganeti_tutorial::ganeti::install {
 
   Exec["install-ganeti"] {
     require => [ Vcsrepo["/root/src/ganeti-${ganeti_version}"],
-      Package["ghc"],
-      Package["libghc6-json-dev"],
-      Package["libghc6-network-dev"],
-      Package["libghc6-parallel-dev"],
-      Package["libghc6-curl-dev"],
-      Package["automake"], Package["autoconf"],
-      Package["pandoc"], Package["graphviz"],
-      Package["python-docutils"], Package["python-sphinx"], ],
+      Package["ghc"], Package["libghc-attoparsec-dev"],
+      Package["libghc-crypto-dev"], Package["libghc-curl-dev"],
+      Package["libghc-deepseq-dev"], Package["libghc-hinotify-dev"],
+      Package["libghc-hslogger-dev"], Package["libghc-json-dev"],
+      Package["libghc-network-dev"], Package["libghc-parallel-dev"],
+      Package["libghc-regex-pcre-dev"], Package["libghc-utf8-string-dev"],
+      Package["libghc-vector-dev"], Package["libpcre-dev"], Package["automake"],
+      Package["autoconf"], Package["pandoc"], Package["graphviz"],
+      Package["python-docutils"], Package["python-sphinx"],
+      ],
   }
 }

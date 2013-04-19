@@ -52,7 +52,7 @@ class ganeti_tutorial::redhat::drbd inherits ganeti_tutorial::drbd {
 }
 
 class ganeti_tutorial::redhat::htools inherits ganeti_tutorial::htools::install_deps {
-  Package["libghc6-curl-dev"] {
+  Package["libghc-curl-dev"] {
     require => Yumrepo["ganeti"],
   }
 
