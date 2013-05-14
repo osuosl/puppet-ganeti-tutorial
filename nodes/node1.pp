@@ -1,7 +1,7 @@
 $host_ip = "33.33.33.11"
 $drbd_ip = "33.33.34.11"
 $git     = false
-$ganeti_version = "2.6.2"
+$ganeti_version = "2.7.0~rc1"
 
 include ganeti_tutorial
 include ganeti_tutorial::networking
