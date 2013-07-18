@@ -73,10 +73,10 @@ class ganeti_tutorial::instance_image::ubuntu {
   $ubuntu_version = "${ganeti_tutorial::params::ubuntu_version}"
 
   file {
-    "/etc/ganeti/instance-image/variants/ubuntu-11.10.conf":
+    "/etc/ganeti/instance-image/variants/ubuntu-12.04.conf":
       ensure  => present,
       require => Exec["install-instance-image"],
-      source  => "${ganeti_tutorial::params::files}/instance-image/ubuntu-11.10.conf";
+      source  => "${ganeti_tutorial::params::files}/instance-image/ubuntu-12.04.conf";
   }
 
   ganeti_tutorial::wget {

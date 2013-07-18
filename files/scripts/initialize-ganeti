@@ -1,6 +1,13 @@
 #!/bin/bash
+GANETI_VERSION="$(gnt-cluster --version | awk '{print $4}')"
+EXTRA_OPTS=
+
 /bin/sed -i -e 's/node.*localhost /localhost /' /etc/hosts
 /bin/sed -i -e 's/node.*localhost\t/localhost /' /etc/hosts
+
+if [[ "$GANETI_VERSION" > "2.6.0" ]] ; then
+    EXTRA_OPTS="--disk-parameters drbd:metavg=ganeti $EXTRA_OPTS"
+fi
 
 /usr/local/sbin/gnt-cluster init \
     --vg-name=ganeti -s 33.33.34.11 \
@@ -8,6 +15,7 @@
     -I hail \
     -H kvm:kernel_path=/boot/vmlinuz-kvmU,initrd_path=/boot/initrd-kvmU,root_path=/dev/sda2,nic_type=e1000,disk_type=scsi,vnc_bind_address=0.0.0.0,serial_console=true \
     -N link=br0 --enabled-hypervisors=kvm \
+    $EXTRA_OPTS \
     ganeti.example.org
 
 /usr/local/sbin/gnt-cluster modify --reserved-lvs=ganeti/swap
