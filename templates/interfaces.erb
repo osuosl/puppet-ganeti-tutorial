@@ -8,7 +8,7 @@ allow-hotplug br0
 
 auto br0
 iface br0 inet static
-   address <%=host_ip%> 
+   address <%=@host_ip%> 
    netmask 255.255.255.0
    network 33.33.33.0
    broadcast 33.33.33.255
@@ -20,7 +20,7 @@ iface br0 inet static
 
 auto eth2
 iface eth2 inet static
-    address <%=drbd_ip%>
+    address <%=@drbd_ip%>
     netmask 255.255.255.0
     network 33.33.34.0
     broadcast 33.33.34.255
