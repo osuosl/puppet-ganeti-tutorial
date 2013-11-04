@@ -57,6 +57,18 @@ class ganeti_tutorial::ganeti::install {
     }
   }
 
+  exec {
+    "cleanup-localhost":
+      command => "/bin/sed -i -e 's/127.0.0.1.*/127.0.0.1 localhost/g' /etc/hosts",
+      unless  => "/bin/grep \"127.0.0.1 localhost\" /etc/hosts";
+    "cleanup-node2":
+      command => "/bin/sed -i -e 's/33.33.33.11.*node2.example.org.*//g' /etc/hosts",
+      onlyif  => "/bin/grep \"33.33.33.11.*node2.example.org.*\" /etc/hosts";
+    "cleanup-node3":
+      command => "/bin/sed -i -e 's/33.33.33.11.*node3.example.org.*//g' /etc/hosts",
+      onlyif  => "/bin/grep \"33.33.33.11.*node3.example.org.*\" /etc/hosts";
+  }
+
   ganeti_tutorial::wget {
     "ganeti-tgz":
       source      => "http://ganeti.googlecode.com/files/ganeti-${ganeti_version}.tar.gz",
@@ -84,7 +96,8 @@ class ganeti_tutorial::ganeti::initialize inherits ganeti_tutorial::ganeti::inst
       creates => "/var/lib/ganeti/config.data",
       require => [
         Exec["install-ganeti"], Exec["ifup_br0"], Exec["ifup_eth2"],
-        Exec["modprobe_drbd"], ],
+        Exec["modprobe_drbd"], Exec["cleanup-localhost"], Exec["cleanup-node2"],
+        Exec["cleanup-node3"], ],
   }
   case $osfamily {
     redhat:   { include ganeti_tutorial::redhat::ganeti::initialize }
